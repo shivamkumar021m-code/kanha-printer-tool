@@ -1,0 +1,2476 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KANHA PRINTERS STAFF</title>
+<!-- PDF.js for reading PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<!-- jsPDF for creating A4 PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#1b1f2a;
+    --paper:#fffaf3;
+    --paper-dark:#fff1e0;
+    --cyan:#00e5ff;
+    --magenta:#ff2d95;
+    --yellow:#ffd60a;
+    --red:#ff3b3b;
+    --red-dark:#e0324a;
+    --violet:#8c5aff;
+    --line:#f0c9e0;
+    --muted:#7a6d8c;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(0,229,255,0.22), transparent 42%),
+      radial-gradient(circle at 88% 12%, rgba(255,45,149,0.20), transparent 45%),
+      radial-gradient(circle at 20% 90%, rgba(255,214,10,0.22), transparent 40%),
+      radial-gradient(circle at 90% 85%, rgba(140,90,255,0.20), transparent 45%);
+    background-attachment:fixed;
+    color:var(--ink);
+    font-family: 'Courier New', ui-monospace, monospace;
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* floating ink-blob layer */
+  .blob{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(45px);
+    opacity:.75;
+    z-index:0;
+    pointer-events:none;
+  }
+  .blob1{ width:280px; height:280px; background:var(--cyan); top:-60px; left:-60px; animation:float1 14s ease-in-out infinite; }
+  .blob2{ width:320px; height:320px; background:var(--magenta); bottom:-80px; right:-80px; animation:float2 16s ease-in-out infinite; }
+  .blob3{ width:220px; height:220px; background:var(--yellow); top:40%; right:10%; animation:float3 18s ease-in-out infinite; }
+  .blob4{ width:200px; height:200px; background:var(--violet); bottom:20%; left:6%; animation:float1 20s ease-in-out infinite reverse; }
+  @keyframes float1{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(40px,50px) scale(1.15); }
+  }
+  @keyframes float2{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-50px,-30px) scale(1.1); }
+  }
+  @keyframes float3{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-30px,40px) scale(1.2); }
+  }
+
+  .display{
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight:900;
+  }
+
+  /* =========================================================
+     ★ ULTRA ATTRACTIVE KANHA PRINTERS HOME BRANDING ★ 
+     ========================================================= */
+  #home .brand-box {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 35px 50px;
+    border-radius: 35px;
+    border: 3px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 
+      0 20px 50px rgba(140, 90, 255, 0.25),
+      0 10px 25px rgba(255, 45, 149, 0.2),
+      inset 0 0 30px rgba(255, 255, 255, 0.6);
+    margin-bottom: 25px;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    animation: cardFloat 6s ease-in-out infinite;
+  }
+
+  @keyframes cardFloat {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-10px) scale(1.02); }
+  }
+
+  #home .brand-box::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      60deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    transform: rotate(30deg);
+    animation: shineSweep 5s infinite linear;
+    pointer-events: none;
+  }
+
+  @keyframes shineSweep {
+    0% { transform: translateX(-100%) rotate(30deg); }
+    100% { transform: translateX(100%) rotate(30deg); }
+  }
+
+  #home .press-mark{
+    font-size: 16px;
+    letter-spacing: 0.5em;
+    color: #fff;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    background: linear-gradient(270deg, var(--magenta), var(--violet), var(--cyan), var(--yellow), var(--red));
+    background-size: 800% 800%;
+    padding: 10px 28px;
+    border-radius: 999px;
+    box-shadow: 0 8px 25px rgba(233, 30, 140, 0.55);
+    animation: rainbowGlow 6s ease infinite;
+    font-weight: 800;
+    display: inline-block;
+  }
+
+  @keyframes rainbowGlow{
+    0%{ background-position:0% 50%; }
+    50%{ background-position:100% 50%; }
+    100%{ background-position:0% 50%; }
+  }
+
+  #home h1{
+    font-size: clamp(3.8rem, 11vw, 7.5rem);
+    line-height: 0.95;
+    margin: 10px 0 5px 0;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    font-weight: 900;
+    position: relative;
+  }
+
+  /* COLORFUL 3D GRADIENT TEXT EFFECT */
+  #home h1 .kanha-text {
+    background: linear-gradient(135deg, #ff007f, #7928ca, #00d4ff, #ff007f);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    filter: drop-shadow(0px 6px 15px rgba(255, 0, 127, 0.35));
+    animation: textShine 4s linear infinite;
+  }
+
+  #home h1 .accent{
+    background: linear-gradient(135deg, #ffbc00, #ff0058, #8a00ff);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    filter: drop-shadow(0px 6px 15px rgba(138, 0, 255, 0.35));
+    animation: textShine 4s linear infinite reverse;
+  }
+
+  @keyframes textShine{
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
+  }
+
+  #home .tagline {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 800;
+    color: var(--ink);
+    margin-top: 15px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  }
+
+  #home .tagline span {
+    color: var(--magenta);
+    background: #fff;
+    padding: 3px 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  /* ========================================================= */
+
+  .page{
+    display:none;
+    min-height:calc(100vh - 50px);
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px;
+    text-align:center;
+    position:relative;
+    z-index:1;
+  }
+  .page.active{ display:flex; animation:pageIn .55s cubic-bezier(.2,.8,.2,1); }
+  @keyframes pageIn{
+    from{ opacity:0; transform:translateY(18px) scale(.98); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .home-btn-row{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:35px;
+    max-width:1050px;
+  }
+  .home-btn2{ border-color:var(--magenta); color:var(--magenta); }
+  .home-btn2:hover{ background:var(--magenta); color:#fff; }
+  
+  .btn{
+    font-family:inherit;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    background:linear-gradient(90deg, var(--violet), var(--magenta));
+    background-size:200% 100%;
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    padding:16px 30px;
+    cursor:pointer;
+    position:relative;
+    box-shadow:0 8px 22px rgba(124,92,255,0.35);
+    transition:transform .18s ease, box-shadow .18s ease, background-position .5s ease;
+  }
+  .btn:hover{ background-position:100% 0; transform:translateY(-2px); box-shadow:0 12px 26px rgba(233,30,140,0.4); }
+  .btn:active{transform:translateY(1px);}
+  .btn.ghost{
+    background:transparent;
+    background-image:none;
+    color:var(--ink);
+    border:1.5px solid var(--violet);
+    box-shadow:none;
+  }
+  .btn.ghost:hover{ background:var(--violet); color:#fff; box-shadow:0 8px 20px rgba(124,92,255,0.3); }
+  .btn.ghost.active{ background:var(--violet); color:#fff; }
+  .btn.red{ background:linear-gradient(90deg, var(--red), var(--magenta)); box-shadow:0 8px 22px rgba(255,71,87,0.35); }
+  .btn.red:hover{ box-shadow:0 12px 26px rgba(255,71,87,0.45); }
+  .btn:disabled{ opacity:.35; cursor:not-allowed; transform:none; box-shadow:none; }
+
+  /* =========================================================
+     ★ HOME PAGE BUTTONS - CLEAR & BOLD FONT COMBINATION ★
+     ========================================================= */
+  #home .btn,
+  #home .btn.ghost,
+  #home .btn.ghost.home-btn2{
+    font-family: 'Arial Black', 'Impact', 'Trebuchet MS', sans-serif;
+    background: linear-gradient(135deg, #0e131f 0%, #1e2538 50%, #101828 100%);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    padding: 18px 32px;
+    border-radius: 14px;
+    border: 3px solid transparent;
+    background-image: 
+      linear-gradient(135deg, #0e131f 0%, #1e2538 50%, #101828 100%),
+      linear-gradient(90deg, #ffd60a, #00e5ff, #ff2d95, #ffd60a);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    background-size: 100% 100%, 300% 100%;
+    box-shadow: 
+      0 10px 25px rgba(14, 19, 31, 0.45),
+      0 0 15px rgba(0, 229, 255, 0.25);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    animation: borderRainbow 6s linear infinite;
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+  }
+
+  @keyframes borderRainbow {
+    0% { background-position: 0 0, 0% 50%; }
+    50% { background-position: 0 0, 100% 50%; }
+    100% { background-position: 0 0, 0% 50%; }
+  }
+
+  #home .btn:hover,
+  #home .btn.ghost:hover,
+  #home .btn.ghost.home-btn2:hover{
+    background-image: 
+      linear-gradient(135deg, #1b233a 0%, #2a3450 50%, #182238 100%),
+      linear-gradient(90deg, #ff2d95, #ffd60a, #00e5ff, #ff2d95);
+    color: #ffd60a;
+    transform: translateY(-5px) scale(1.04);
+    box-shadow: 
+      0 16px 32px rgba(255, 45, 149, 0.35),
+      0 0 20px rgba(255, 214, 10, 0.4);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+  }
+
+  #home .btn:active,
+  #home .btn.ghost:active{
+    transform: translateY(-1px) scale(0.99);
+  }
+  /* ========================================================= */
+
+  .crop-corner{
+    position:fixed; width:18px; height:18px; border:2px solid var(--cyan); opacity:.6; z-index:1;
+  }
+  .c-tl{top:14px; left:14px; border-right:none; border-bottom:none;}
+  .c-tr{top:14px; right:14px; border-left:none; border-bottom:none; border-color:var(--magenta);}
+  .c-bl{bottom:14px; left:14px; border-right:none; border-top:none; border-color:var(--yellow);}
+  .c-br{bottom:14px; right:14px; border-left:none; border-top:none; border-color:var(--violet);}
+
+  /* TOOL PAGES */
+  #tool, #docprint, #photosheet, #aadharmerge, #aadharcrop, #passbook{ align-items:stretch; padding:0; }
+  .tool-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 26px;
+    border-bottom:2px solid var(--ink);
+    background:rgba(255,250,243,0.6);
+  }
+  .tool-header h2{
+    font-family: Georgia, serif;
+    font-weight:900;
+    font-size:1.4rem;
+    margin:0;
+  }
+  .tool-header h2 .accent{
+    background:linear-gradient(90deg, var(--red), var(--magenta));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .back{
+    font-family:inherit;
+    font-size:18px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    background:none;
+    border:none;
+    color:var(--muted);
+    cursor:pointer;
+    text-decoration:underline;
+    padding:8px 4px;
+    transition:color .15s ease;
+  }
+  .back:hover{color:var(--magenta);}
+
+  .tool-body{
+    flex:1;
+    display:grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap:0;
+  }
+  @media (max-width: 820px){
+    .tool-body{ grid-template-columns: 1fr; }
+  }
+
+  .canvas-side{
+    padding:26px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    border-right:1px solid var(--line);
+    min-height:420px;
+  }
+  @media (max-width: 820px){ .canvas-side{ border-right:none; border-bottom:1px solid var(--line);} }
+
+  .dropzone{
+    width:100%;
+    max-width:520px;
+    min-height:320px;
+    border:2.5px dashed var(--cyan);
+    background:linear-gradient(135deg, var(--paper-dark), #fff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:14px;
+    padding:24px;
+    cursor:pointer;
+    border-radius:18px;
+    transition:border-color .2s ease, background .2s ease, transform .2s ease;
+    position:relative;
+    overflow:hidden;
+    animation:borderPulse 3s ease-in-out infinite;
+  }
+  @keyframes borderPulse{
+    0%,100%{ border-color:var(--cyan); }
+    33%{ border-color:var(--magenta); }
+    66%{ border-color:var(--yellow); }
+  }
+  .dropzone.drag{ border-color:var(--red); background:#ffe9ec; transform:scale(1.02); animation:none; }
+  .dropzone .hint{ font-size:12px; color:var(--muted); letter-spacing:.05em; line-height:1.7; }
+  .dropzone .hint b{ color:var(--magenta); }
+  .dropzone img{
+    max-width:100%;
+    max-height:340px;
+    object-fit:contain;
+    display:none;
+    border-radius:12px;
+    animation:imgIn .4s ease;
+  }
+  @keyframes imgIn{
+    from{ opacity:0; transform:scale(.94); }
+    to{ opacity:1; transform:scale(1); }
+  }
+  .dropzone.has-image{ padding:10px; cursor:default; animation:none; }
+  .dropzone.has-image img{ display:block; }
+  .dropzone.has-image .hint{ display:none; }
+
+  #rsFileInput, #dpFileInput, #psFileInput, #amAFileInput, #amBFileInput{ display:none; }
+  .crop-controls{ display:none; }
+
+  /* PHOTO SHEET preview */
+  .sheet-preview-wrap{
+    margin-top:18px;
+    width:100%;
+    max-width:520px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    align-items:center;
+  }
+  .sheet-label{
+    font-size:11px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--violet);
+    font-weight:700;
+  }
+  .sheet-preview-img{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:#fff;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  }
+
+  /* AADHAR MERGE layout */
+  .am-canvas-side{ align-items:stretch; }
+  .am-pair{
+    display:flex;
+    gap:16px;
+    width:100%;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .am-col{
+    flex:1 1 220px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    align-items:stretch;
+    max-width:260px;
+  }
+  .am-col-label{
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--violet);
+    font-weight:700;
+    text-align:center;
+  }
+  .am-dropzone{ min-height:200px; }
+
+  input[type="range"]{ width:100%; accent-color:var(--magenta); }
+
+  .crop-box{
+    position:absolute;
+    border:2px dashed var(--magenta);
+    background:rgba(255,45,149,0.12);
+    display:none;
+    pointer-events:none;
+    z-index:3;
+  }
+  .crop-handle{
+    position:absolute;
+    width:18px;
+    height:18px;
+    background:var(--magenta);
+    border:3px solid #fff;
+    border-radius:50%;
+    pointer-events:auto;
+    box-shadow:0 2px 8px rgba(0,0,0,0.35);
+    z-index:4;
+  }
+  .crop-handle.tl{ top:0; left:0; transform:translate(-50%,-50%); cursor:nwse-resize; }
+  .crop-handle.tr{ top:0; left:100%; transform:translate(-50%,-50%); cursor:nesw-resize; }
+  .crop-handle.bl{ top:100%; left:0; transform:translate(-50%,-50%); cursor:nesw-resize; }
+  .crop-handle.br{ top:100%; left:100%; transform:translate(-50%,-50%); cursor:nwse-resize; }
+  .dropzone.cropping{ cursor:crosshair; touch-action:none; user-select:none; -webkit-user-select:none; }
+  .dropzone.cropping img{ pointer-events:none; -webkit-user-drag:none; }
+  .dropzone.cropping .crop-box{ pointer-events:auto; cursor:move; touch-action:none; box-shadow:0 0 0 9999px rgba(20,10,40,0.38); }
+  @media (pointer:coarse){ .crop-handle{ width:30px; height:30px; } }
+  #psSheetPreview.del-mode{ cursor:pointer; outline:3px solid var(--magenta); outline-offset:2px; }
+
+  .dp-btn-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .dp-btn-row .btn{ padding:10px 14px; font-size:11px; }
+
+  .controls-side{
+    padding:26px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    align-items:stretch;
+    justify-content:flex-start;
+    text-align:left;
+  }
+  .field-group{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .field-group label{
+    font-size:11px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--violet);
+    font-weight:700;
+  }
+  .dim-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .dim-row input[type="number"], .field-group input[type="file"], .field-group input[type="password"] {
+    font-family:inherit;
+    font-size:16px;
+    font-weight:700;
+    background:#fff;
+    border:2px solid var(--violet);
+    border-radius:10px;
+    padding:10px 12px;
+    width:100%;
+    color:var(--ink);
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .dim-row input[type="number"]:focus, .field-group input:focus { outline:none; border-color:var(--magenta); box-shadow:0 0 0 4px rgba(233,30,140,0.15); }
+  .dim-x{ color:var(--muted); font-size:16px; }
+
+  .action-row{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:auto;
+  }
+  .status{
+    font-size:11px;
+    letter-spacing:.05em;
+    color:var(--red);
+    min-height:16px;
+    transition:opacity .2s ease;
+  }
+  footer{
+    text-align:center;
+    font-size:10px;
+    letter-spacing:.2em;
+    color:var(--muted);
+    padding:14px;
+    text-transform:uppercase;
+    border-top:1px solid var(--line);
+    position:relative;
+    z-index:2;
+    background:rgba(255,250,243,0.6);
+  }
+</style>
+</head>
+<body>
+
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+  <div class="blob blob4"></div>
+
+  <div class="crop-corner c-tl" id="corner1"></div>
+  <div class="crop-corner c-tr" id="corner2"></div>
+  <div class="crop-corner c-bl" id="corner3"></div>
+  <div class="crop-corner c-br" id="corner4"></div>
+
+  <!-- HOME PAGE -->
+  <section id="home" class="page active">
+    <div class="brand-box">
+      <div class="press-mark">★ WELCOME TO ★</div>
+      <h1 class="display">
+        <span class="kanha-text">KANHA</span> 
+        <span class="accent">PRINTERS</span>
+      </h1>
+      <div class="tagline">★ <span>ALL IN ONE</span> DIGITAL PRINTING SOLUTIONS ★</div>
+    </div>
+    
+    <div class="home-btn-row">
+      <button class="btn" id="goTool">Resize Tool</button>
+      <button class="btn ghost home-btn2" id="goDocPrint">Document Print</button>
+      <button class="btn" id="goPhotoSheet">Photo</button>
+      <button class="btn" id="goAadharMerge">Aadhar Merge</button>
+      <button class="btn" id="goAadharCrop">Adhar Crop</button>
+      <button class="btn" id="goPassbook">Passbook Tool</button>
+      <a href="https://consumer.uppcl.org/wss/pay_bill_home" target="_blank" style="text-decoration:none;">
+        <button class="btn" type="button">Bill check</button>
+      </a>
+      <a href="https://myaadhaar.uidai.gov.in/en_IN" target="_blank" style="text-decoration:none;">
+        <button class="btn" type="button">Aadhar download</button>
+      </a>
+      <a href="https://upbhulekh.gov.in/#/selection" target="_blank" style="text-decoration:none;">
+        <button class="btn" type="button">Bhulekh</button>
+      </a>
+    </div>
+  </section>
+
+  <!-- RESIZE TOOL PAGE -->
+  <section id="tool" class="page">
+    <div class="tool-header">
+      <h2 class="display">Img <span class="accent">Resize</span></h2>
+      <button class="back" id="goHome">&larr; Home</button>
+    </div>
+
+    <div class="tool-body">
+      <div class="canvas-side">
+        <div class="dropzone" id="rsDropzone" tabindex="0">
+          <img id="rsPreview" alt="preview" />
+          <div class="crop-box" id="rsCropBox">
+            <div class="crop-handle tl" data-corner="tl"></div>
+            <div class="crop-handle tr" data-corner="tr"></div>
+            <div class="crop-handle bl" data-corner="bl"></div>
+            <div class="crop-handle br" data-corner="br"></div>
+          </div>
+          <div class="hint">
+            <b>Click</b> / <b>Drag</b> / <b>Paste</b> (Ctrl+V)
+          </div>
+        </div>
+        <input type="file" id="rsFileInput" accept="image/*" />
+      </div>
+
+      <div class="controls-side">
+        <div class="field-group">
+          <label>Rotate &amp; Crop</label>
+          <div class="dp-btn-row">
+            <button class="btn ghost" id="rsRotateLBtn" disabled>↺ -90°</button>
+            <button class="btn ghost" id="rsRotateRBtn" disabled>↻ +90°</button>
+            <button class="btn ghost" id="rsCropBtn" disabled>Crop Box</button>
+          </div>
+        </div>
+
+        <div class="field-group crop-controls" id="rsCropControls">
+          <label>कोनों को खींचकर साइज़ बदलें · बॉक्स के अंदर से खींचकर हिलाएं</label>
+          <div class="dp-btn-row">
+            <button class="btn" id="rsApplyCrop">Apply Crop</button>
+            <button class="btn ghost" id="rsCancelCrop">Cancel</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Enhance</label>
+          <div class="dp-btn-row">
+            <button class="btn ghost enhance-btn" id="rsEnhMed" disabled>Medium</button>
+            <button class="btn ghost enhance-btn" id="rsEnhHigh" disabled>High</button>
+            <button class="btn ghost enhance-btn" id="rsEnhVHigh" disabled>V.High</button>
+            <button class="btn ghost enhance-btn" id="rsEnhInk" disabled>Ink Saver</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>KB Target</label>
+          <div class="dim-row">
+            <input type="number" id="rsKbInput" placeholder="Size" min="1" disabled />
+            <span class="dim-x">KB</span>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <div class="status" id="rsStatus"></div>
+          <button class="btn red" id="rsDownloadBtn" disabled>Download JPG</button>
+          <button class="btn ghost" id="rsDownloadPdfBtn" disabled style="margin-top:6px;">Download PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>100% Local &mdash; No Upload</footer>
+  </section>
+
+  <!-- DOCUMENT PRINT PAGE -->
+  <section id="docprint" class="page">
+    <div class="tool-header">
+      <h2 class="display">Document <span class="accent">Print</span></h2>
+      <button class="back" id="goHome2">&larr; Home</button>
+    </div>
+
+    <div class="tool-body">
+      <div class="canvas-side">
+        <div class="dropzone" id="dpDropzone" tabindex="0">
+          <img id="dpPreview" alt="preview" />
+          <div class="crop-box" id="dpCropBox">
+            <div class="crop-handle tl" data-corner="tl"></div>
+            <div class="crop-handle tr" data-corner="tr"></div>
+            <div class="crop-handle bl" data-corner="bl"></div>
+            <div class="crop-handle br" data-corner="br"></div>
+          </div>
+          <div class="hint">
+            <b>Click</b> / <b>Drag</b> / <b>Paste</b> (Ctrl+V)
+          </div>
+        </div>
+        <input type="file" id="dpFileInput" accept="image/*" />
+      </div>
+
+      <div class="controls-side">
+        <div class="field-group">
+          <label>Rotate (90° Left / Right) &amp; Crop</label>
+          <div class="dp-btn-row">
+            <button class="btn ghost" id="dpRotateLBtn" disabled>↺ -90°</button>
+            <button class="btn ghost" id="dpRotateRBtn" disabled>↻ +90°</button>
+            <button class="btn ghost" id="dpCropBtn" disabled>Crop</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Custom Angle Rotate (<span id="dpAngleVal">0°</span>)</label>
+          <input type="range" id="dpRotateAngle" min="-45" max="45" value="0" disabled />
+          <div class="dp-btn-row">
+            <button class="btn ghost" id="dpResetAngle" disabled>0° Reset</button>
+          </div>
+        </div>
+
+        <div class="field-group crop-controls" id="dpCropControls">
+          <label>कोनों को खींचकर साइज़ बदलें · बॉक्स के अंदर से खींचकर हिलाएं</label>
+          <div class="dp-btn-row">
+            <button class="btn" id="dpApplyCrop">Apply</button>
+            <button class="btn ghost" id="dpCancelCrop">Cancel</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Enhance</label>
+          <div class="dp-btn-row">
+            <button class="btn ghost enhance-btn" id="dpEnhMed" disabled>Medium</button>
+            <button class="btn ghost enhance-btn" id="dpEnhHigh" disabled>High</button>
+            <button class="btn ghost enhance-btn" id="dpEnhVHigh" disabled>V.High</button>
+            <button class="btn ghost enhance-btn" id="dpEnhInk" disabled>Ink Saver</button>
+          </div>
+        </div>
+
+        <div class="status" id="dpStatus"></div>
+
+        <div class="action-row">
+          <button class="btn red" id="dpPrintBtn" disabled>Print</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>100% Local &mdash; No Upload</footer>
+  </section>
+
+  <!-- PHOTO SHEET PAGE -->
+  <section id="photosheet" class="page">
+    <div class="tool-header">
+      <h2 class="display">Photo <span class="accent">Sheet</span></h2>
+      <button class="back" id="goHome3">&larr; Home</button>
+    </div>
+
+    <div class="tool-body">
+      <div class="canvas-side">
+        <div class="dropzone" id="psDropzone" tabindex="0">
+          <img id="psPreview" alt="preview" />
+          <div class="crop-box" id="psCropBox">
+            <div class="crop-handle tl" data-corner="tl"></div>
+            <div class="crop-handle tr" data-corner="tr"></div>
+            <div class="crop-handle bl" data-corner="bl"></div>
+            <div class="crop-handle br" data-corner="br"></div>
+          </div>
+          <div class="hint"><b>Click</b> / <b>Drag</b></div>
+        </div>
+        <input type="file" id="psFileInput" accept="image/*" />
+
+        <div class="sheet-preview-wrap">
+          <div class="sheet-label">A4 Sheet Preview</div>
+          <img id="psSheetPreview" class="sheet-preview-img" alt="A4 sheet preview" />
+        </div>
+      </div>
+
+      <div class="controls-side">
+        <div class="field-group">
+          <label>Crop (3.1 &times; 3.9 cm) &amp; Rotate</label>
+          <div class="dp-btn-row">
+            <button class="btn ghost" id="psRotateLBtn" disabled>↺ -90°</button>
+            <button class="btn ghost" id="psRotateRBtn" disabled>↻ +90°</button>
+            <button class="btn ghost" id="psCropBtn" disabled>Crop</button>
+          </div>
+        </div>
+
+        <div class="field-group crop-controls" id="psCropControls">
+          <label>कोनों को खींचकर साइज़ बदलें · बॉक्स के अंदर से खींचकर हिलाएं</label>
+          <div class="dp-btn-row">
+            <button class="btn" id="psApplyCrop">Apply</button>
+            <button class="btn ghost" id="psCancelCrop">Cancel</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>★ Smart Beauty &amp; Studio Retouch ★</label>
+          <div class="dp-btn-row">
+            <button class="btn ghost enhance-btn" id="psBeautyBtn" disabled>Soft Skin / Glow</button>
+            <button class="btn ghost enhance-btn" id="psAutoEnhance" disabled>Studio Enhance</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Skin Tone (Warm / Cool)</label>
+          <input type="range" id="psTone" min="-30" max="30" value="0" disabled>
+        </div>
+        <div class="field-group">
+          <label>Brightness</label>
+          <input type="range" id="psBrightness" min="-50" max="50" value="0" disabled>
+        </div>
+        <div class="field-group">
+          <label>Contrast</label>
+          <input type="range" id="psContrast" min="-50" max="50" value="0" disabled>
+        </div>
+        <div class="field-group">
+          <label>Sharpness / Detail</label>
+          <input type="range" id="psSharpness" min="0" max="50" value="0" disabled>
+        </div>
+
+        <div class="field-group">
+          <label>कितनी फोटो जोड़नी / हटानी हैं?</label>
+          <div class="dp-btn-row" id="psCountRow">
+            <button class="btn ghost" data-n="1">1</button>
+            <button class="btn ghost" data-n="2">2</button>
+            <button class="btn ghost" data-n="3">3</button>
+            <button class="btn ghost" data-n="4">4</button>
+            <button class="btn ghost" data-n="5">5</button>
+            <button class="btn ghost active" data-n="6">6</button>
+            <button class="btn ghost" data-n="12">12</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>A4 Sheet</label>
+          <div class="dp-btn-row">
+            <button class="btn" id="psAddRow" disabled>+ 6 फोटो जोड़ें</button>
+            <button class="btn ghost" id="psDelRow" disabled>− 6 फोटो हटाएं</button>
+          </div>
+          <div class="dp-btn-row" style="margin-top:8px;">
+            <button class="btn ghost" id="psDelMode" disabled>🗑 फोटो पर क्लिक करके हटाएं</button>
+            <button class="btn ghost" id="psNewSheet">नया A4 Sheet (सब हटाएं)</button>
+          </div>
+        </div>
+
+        <div class="status" id="psStatus"></div>
+
+        <div class="action-row">
+          <button class="btn ghost" id="psDownloadBtn" disabled>Download PDF</button>
+          <button class="btn red" id="psPrintBtn" disabled>Print A4</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>100% Local &mdash; No Upload</footer>
+  </section>
+
+  <!-- AADHAR MERGE PAGE -->
+  <section id="aadharmerge" class="page">
+    <div class="tool-header">
+      <h2 class="display">Aadhar <span class="accent">Merge</span></h2>
+      <button class="back" id="goHome4">&larr; Home</button>
+    </div>
+
+    <div class="tool-body">
+      <div class="canvas-side am-canvas-side">
+        <div class="am-pair">
+          <!-- Photo 1 -->
+          <div class="am-col">
+            <div class="am-col-label">Photo 1</div>
+            <div class="dropzone am-dropzone" id="amADropzone" tabindex="0">
+              <img id="amAPreview" alt="preview" />
+              <div class="crop-box" id="amACropBox">
+                <div class="crop-handle tl" data-corner="tl"></div>
+                <div class="crop-handle tr" data-corner="tr"></div>
+                <div class="crop-handle bl" data-corner="bl"></div>
+                <div class="crop-handle br" data-corner="br"></div>
+              </div>
+              <div class="hint"><b>Click</b> / <b>Drag</b></div>
+            </div>
+            <input type="file" id="amAFileInput" accept="image/*" />
+            <div class="dp-btn-row">
+              <button class="btn ghost" id="amARotateLBtn" disabled>↺</button>
+              <button class="btn ghost" id="amARotateRBtn" disabled>↻</button>
+              <button class="btn ghost" id="amACropBtn" disabled>Crop</button>
+            </div>
+            <div class="field-group crop-controls" id="amACropControls">
+              <div class="dp-btn-row">
+                <button class="btn" id="amAApplyCrop">Apply</button>
+                <button class="btn ghost" id="amACancelCrop">Cancel</button>
+              </div>
+            </div>
+            <div class="field-group">
+              <div class="dp-btn-row">
+                <button class="btn ghost enhance-btn" id="amAEnhMed" disabled>Medium</button>
+                <button class="btn ghost enhance-btn" id="amAEnhHigh" disabled>High</button>
+                <button class="btn ghost enhance-btn" id="amAEnhVHigh" disabled>V.High</button>
+                <button class="btn ghost enhance-btn" id="amAEnhInk" disabled>Ink Saver</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Photo 2 -->
+          <div class="am-col">
+            <div class="am-col-label">Photo 2</div>
+            <div class="dropzone am-dropzone" id="amBDropzone" tabindex="0">
+              <img id="amBPreview" alt="preview" />
+              <div class="crop-box" id="amBCropBox">
+                <div class="crop-handle tl" data-corner="tl"></div>
+                <div class="crop-handle tr" data-corner="tr"></div>
+                <div class="crop-handle bl" data-corner="bl"></div>
+                <div class="crop-handle br" data-corner="br"></div>
+              </div>
+              <div class="hint"><b>Click</b> / <b>Drag</b></div>
+            </div>
+            <input type="file" id="amBFileInput" accept="image/*" />
+            <div class="dp-btn-row">
+              <button class="btn ghost" id="amBRotateLBtn" disabled>↺</button>
+              <button class="btn ghost" id="amBRotateRBtn" disabled>↻</button>
+              <button class="btn ghost" id="amBCropBtn" disabled>Crop</button>
+            </div>
+            <div class="field-group crop-controls" id="amBCropControls">
+              <div class="dp-btn-row">
+                <button class="btn" id="amBApplyCrop">Apply</button>
+                <button class="btn ghost" id="amBCancelCrop">Cancel</button>
+              </div>
+            </div>
+            <div class="field-group">
+              <div class="dp-btn-row">
+                <button class="btn ghost enhance-btn" id="amBEnhMed" disabled>Medium</button>
+                <button class="btn ghost enhance-btn" id="amBEnhHigh" disabled>High</button>
+                <button class="btn ghost enhance-btn" id="amBEnhVHigh" disabled>V.High</button>
+                <button class="btn ghost enhance-btn" id="amBEnhInk" disabled>Ink Saver</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-side">
+        <div class="field-group">
+          <label>Merge</label>
+          <div class="dp-btn-row">
+            <button class="btn" id="amMergeBtn" disabled>Merge Images</button>
+          </div>
+        </div>
+
+        <div class="sheet-preview-wrap" id="amResultWrap" style="display:none;">
+          <div class="sheet-label">Merged Preview</div>
+          <img id="amResultPreview" class="sheet-preview-img" alt="merged" />
+        </div>
+
+        <div class="field-group">
+          <label>Target Size</label>
+          <div class="dim-row">
+            <input type="number" id="amKbInput" min="10" value="95" />
+            <span class="dim-x">KB</span>
+          </div>
+        </div>
+
+        <div class="status" id="amStatus"></div>
+
+        <div class="action-row">
+          <button class="btn ghost" id="amDownloadBtn" disabled>Download JPG</button>
+          <button class="btn red" id="amPrintBtn" disabled>Print</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>100% Local &mdash; No Upload</footer>
+  </section>
+
+  <!-- AADHAR CROP (PVC) PAGE -->
+  <section id="aadharcrop" class="page">
+    <div class="tool-header">
+      <h2 class="display">Aadhar <span class="accent">Crop (PVC)</span></h2>
+      <button class="back" id="goHome5">&larr; Home</button>
+    </div>
+
+    <div class="tool-body">
+      <div class="canvas-side am-canvas-side" style="justify-content: flex-start; padding-top: 40px;">
+        <div class="field-group" style="width:100%; max-width:400px; margin-bottom: 20px;">
+          <label>Select Original Aadhaar PDF:</label>
+          <input type="file" id="acPdfFile" accept="application/pdf" />
+        </div>
+        <div class="field-group" style="width:100%; max-width:400px; margin-bottom: 20px;">
+          <label>Aadhaar Password (e.g., GAUR1995):</label>
+          <input type="password" id="acPdfPassword" placeholder="Enter PDF Password" />
+        </div>
+        <div class="dp-btn-row" style="margin-bottom: 20px;">
+          <button class="btn" id="acProcessBtn">Load & Auto-Crop PVC</button>
+        </div>
+        <div class="status" id="acStatus" style="font-weight: bold;"></div>
+
+        <!-- Preview Section -->
+        <div class="sheet-preview-wrap" id="acPreviewSection" style="display:none; width:100%; max-width: 100%; margin-top: 20px;">
+          <div class="am-pair">
+            <div class="am-col">
+              <div class="am-col-label">Front Side</div>
+              <img id="acPreviewFront" class="sheet-preview-img" style="aspect-ratio: 85.6/54; object-fit:contain;" />
+            </div>
+            <div class="am-col">
+              <div class="am-col-label">Back Side</div>
+              <img id="acPreviewBack" class="sheet-preview-img" style="aspect-ratio: 85.6/54; object-fit:contain;" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-side">
+        <button class="btn ghost" id="acToggleBtn" style="display:none; margin-bottom: 10px;">⚙️ Adjust Settings</button>
+
+        <div id="acAdjustSection" style="display:none; flex-direction:column; gap:15px;">
+          <div class="field-group">
+            <label style="display: flex; justify-content: space-between;"><span>🔍 Zoom (Scale):</span> <span id="acZoomVal">100%</span></label>
+            <input type="range" id="acZoomSlider" min="80" max="130" value="100">
+          </div>
+          <div class="field-group">
+            <label style="display: flex; justify-content: space-between;"><span>↕️ Up / Down:</span> <span id="acYVal">0</span></label>
+            <input type="range" id="acOffsetY" min="-150" max="150" value="0">
+          </div>
+          <div class="field-group">
+            <label style="display: flex; justify-content: space-between;"><span>↔️ FRONT L/R:</span> <span id="acXFrontVal">0</span></label>
+            <input type="range" id="acOffsetXFront" min="-150" max="150" value="0">
+          </div>
+          <div class="field-group">
+            <label style="display: flex; justify-content: space-between;"><span>↔️ BACK L/R:</span> <span id="acXBackVal">0</span></label>
+            <input type="range" id="acOffsetXBack" min="-150" max="150" value="0">
+          </div>
+          <button class="btn ghost" id="acSaveBtn">💾 Save Defaults</button>
+          <div class="status" id="acSaveMsg" style="color:#198754; display:none;">✅ Settings Saved!</div>
+        </div>
+
+        <div class="action-row" id="acActionRow" style="display:none; margin-top: auto;">
+          <button class="btn ghost" id="acDownloadJPGs">🖼️ Download High-Res JPGs</button>
+          <button class="btn red" id="acDownloadPDF">📄 Download A4 PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>100% Local &mdash; No Upload</footer>
+  </section>
+
+  <!-- PASSBOOK TOOL PAGE (EMBEDDED) -->
+  <section id="passbook" class="page">
+    <div class="tool-header" style="width:100%;">
+      <h2 class="display">UPGB Passbook <span class="accent">Tool</span></h2>
+      <button class="back" id="goHome6">&larr; Home</button>
+    </div>
+
+    <div class="tool-body" style="width:100%; text-align:left;">
+      <div class="panel" style="background:rgba(20, 27, 44, 0.65); border:1px solid var(--line); border-radius:16px; padding:20px; backdrop-filter:blur(15px); color:var(--ink); margin:20px;">
+        <h2 style="color:var(--magenta); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin:0 0 14px 0; border-bottom:1px solid var(--line); padding-bottom:8px;">📄 AUTO-FILL FROM ACCOUNT OPENING PDF</h2>
+        <div class="field" style="margin-bottom:12px;">
+          <label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Account Opening Form (PDF) चुनें</label>
+          <input type="file" id="pdfInput" accept="application/pdf" style="text-transform: none; width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px;">
+        </div>
+        <div class="btnrow" style="display:flex; gap:10px; margin-top:16px;">
+          <button class="btn" onclick="handlePdfUpload()" style="padding:10px 16px;">📤 Extract & Fill Form</button>
+        </div>
+        <div class="status" id="pdfStatus"></div>
+
+        <h2 style="color:var(--magenta); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin:20px 0 14px 0; border-bottom:1px solid var(--line); padding-bottom:8px;">🏢 BRANCH DETAILS (FRONT PAGE)</h2>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Branch Name (e.g. SAHJAHANPUR)</label><input id="branchName" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">VPO / Post line (Line 1)</label><input id="addr1" value="SHAHJAHANPUR" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">District line (Line 2)</label><input id="addr2" value="KANPUR DEHAT" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Pin Code (Branch)</label><input id="pin" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Tel / Phone</label><input id="tel" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+
+        <h2 style="color:var(--magenta); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin:20px 0 14px 0; border-bottom:1px solid var(--line); padding-bottom:8px;">👤 ACCOUNT DETAILS</h2>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Customer ID</label><input id="custId" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Account Number</label><input id="accNo" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Account Holder Name</label><input id="accName" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">IFSC Code</label><input id="ifsc" value="BARB0BUPGBX" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">MICR Code</label><input id="micr" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+
+        <h2 style="color:var(--magenta); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin:20px 0 14px 0; border-bottom:1px solid var(--line); padding-bottom:8px;">🏡 KYC / NOMINEE DETAILS (BACK PAGE)</h2>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Occupation</label><input id="occupation" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Operation Mode</label><input id="opMode" placeholder="e.g. SELF" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Comm Address — line 1 (Vill/Locality)</label><input id="commAddr1" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Comm Address — line 2 (Post/Tehsil)</label><input id="commAddr2" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Comm Address — line 3 (District/State)</label><input id="commAddr3" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Comm. Pin Code</label><input id="commPin" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Nominee Added</label>
+          <select id="nominee" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;">
+            <option value="">--</option>
+            <option value="YES">YES</option>
+            <option value="NO">NO</option>
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:12px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">A/c Open Date</label><input id="openDate" placeholder="DD-MM-YYYY" style="width:100%; padding:9px 12px; border:2px solid var(--violet); border-radius:10px; background:#fff; font-size:16px; text-transform:uppercase;"></div>
+
+        <div class="btnrow">
+          <button class="btn ghost" onclick="clearForm()">Clear Form</button>
+        </div>
+      </div>
+
+      <div class="preview-wrap" style="display:flex; flex-direction:column; align-items:center; gap:14px; padding:20px;">
+        <div class="tabbar" style="display:flex; gap:10px; background:rgba(255,250,243,0.6); border:1px solid var(--line); border-radius:12px; padding:6px; width:100%; max-width:750px;">
+          <button class="tabbtn active" id="tabBtnPage1" onclick="switchPage('page1')" style="flex:1; background:transparent; color:var(--muted); border-radius:8px; padding:10px; font-size:13px; font-weight:600; cursor:pointer;">Front Page (Print 1)</button>
+          <button class="tabbtn" id="tabBtnPage2" onclick="switchPage('page2')" style="flex:1; background:transparent; color:var(--muted); border-radius:8px; padding:10px; font-size:13px; font-weight:600; cursor:pointer;">Back Page (Print 2)</button>
+        </div>
+
+        <div class="page-size-controls" style="display:flex; gap:12px; align-items:center; font-size:12.5px; color:var(--ink); background:rgba(255,250,243,0.6); border:1px solid var(--line); border-radius:10px; padding:10px 16px; flex-wrap:wrap; width:100%; max-width:750px;">
+          <span><strong>Orientation:</strong></span>
+          <select id="pageOrientation" onchange="updatePage()" style="padding:6px 8px; border:2px solid var(--violet); border-radius:6px; background:#fff; color:#000; text-align:center;">
+            <option value="landscape" selected>Landscape (पड़ा)</option>
+            <option value="portrait">Portrait (खड़ा)</option>
+          </select>
+
+          <span><strong>Size (mm):</strong></span>
+          W <input type="number" id="pageW" onchange="updatePage()" style="width:55px; padding:6px 8px; border:2px solid var(--violet); border-radius:6px; background:#fff; color:#000; text-align:center;">
+          H <input type="number" id="pageH" onchange="updatePage()" style="width:55px; padding:6px 8px; border:2px solid var(--violet); border-radius:6px; background:#fff; color:#000; text-align:center;">
+          
+          <span><strong>Font:</strong></span>
+          <select id="fontFamily" onchange="updatePage()" style="font-size:12px; padding:6px 8px; border:2px solid var(--violet); border-radius:6px; background:#fff; color:#000;">
+            <option value="'VT323', monospace">Dot Matrix (Bank Style)</option>
+            <option value="'Courier New', monospace">Courier New</option>
+            <option value="monospace">Monospace</option>
+          </select>
+
+          <span><strong>Size:</strong></span>
+          <input type="number" id="fontSize" value="14" step="0.5" onchange="updatePage()" style="width:55px; padding:6px 8px; border:2px solid var(--violet); border-radius:6px; background:#fff; color:#000; text-align:center;">
+          
+          <span>Zoom</span>
+          <input type="number" id="zoom" value="100" style="width:42px; padding:6px 8px; border:2px solid var(--violet); border-radius:6px; background:#fff; color:#000; text-align:center;" onchange="updateZoom()">%
+        </div>
+
+        <div id="printArea" style="background:#fff; border:2px dashed #64748b; position:relative; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-radius:4px; overflow:hidden;"></div>
+
+        <div class="page-size-controls" style="display:flex; gap:12px; align-items:center; font-size:12.5px; color:var(--ink); background:rgba(255,250,243,0.6); border:1px solid var(--line); border-radius:10px; padding:10px 16px; flex-wrap:wrap; width:100%; max-width:750px;">
+          <span><strong>Print Darkness / Weight:</strong></span>
+          <select id="printDarkness" onchange="renderPreview()" style="padding:6px 10px; border-radius:6px; border:2px solid var(--violet); background:#fff; color:#000;">
+            <option value="light">1. Extra Light (बहुत हल्का - Thin Ink)</option>
+            <option value="normal" selected>2. Normal Light (हल्का - Standard)</option>
+            <option value="medium">3. Medium Dark (गहरा - Medium)</option>
+            <option value="xbold">4. Extra Dark (बहुत गहरा - Double Strike)</option>
+          </select>
+        </div>
+
+        <div class="btnrow">
+          <button class="btn red" style="padding: 12px 28px; font-size:15px;" onclick="doPrint()">🖨️ Print <span id="printPageLabel">Front Page</span></button>
+        </div>
+
+        <div class="panel" style="width:100%; max-width:750px; background:rgba(20, 27, 44, 0.65); border:1px solid var(--line); border-radius:16px; padding:20px; color:var(--ink);">
+          <h2 style="color:var(--magenta); font-size:12px; text-transform:uppercase; letter-spacing:1px; margin:0 0 14px 0; border-bottom:1px solid var(--line); padding-bottom:8px;">🎯 FIELD ALIGNMENT (MM FROM TOP-LEFT) — <span id="alignPageLabel">FRONT PAGE</span></h2>
+          <div class="pos-head" style="display:grid; grid-template-columns: 1fr 65px 65px; gap:8px; font-size:11px; color:var(--muted); margin-bottom:8px; font-weight:600;"><span>Field Name</span><span>X Position</span><span>Y Position</span></div>
+          <div id="posControls"></div>
+          <div class="btnrow">
+            <button class="btn" onclick="saveLayout()">💾 Save Alignment</button>
+            <button class="btn ghost" onclick="resetLayout()">Reset Page</button>
+          </div>
+          <div class="status" id="statusMsg"></div>
+        </div>
+      </div>
+    </div>
+    <footer>100% Local &mdash; No Upload</footer>
+  </section>
+
+<script>
+  // Navigation
+  const allPages = document.querySelectorAll('.page');
+  function showPage(id){
+    allPages.forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+  document.getElementById('goTool').addEventListener('click', () => showPage('tool'));
+  document.getElementById('goDocPrint').addEventListener('click', () => showPage('docprint'));
+  document.getElementById('goPhotoSheet').addEventListener('click', () => showPage('photosheet'));
+  document.getElementById('goAadharMerge').addEventListener('click', () => showPage('aadharmerge'));
+  document.getElementById('goAadharCrop').addEventListener('click', () => showPage('aadharcrop'));
+  document.getElementById('goPassbook').addEventListener('click', () => { showPage('passbook'); renderPreview(); });
+  document.getElementById('goHome').addEventListener('click', () => showPage('home'));
+  document.getElementById('goHome2').addEventListener('click', () => showPage('home'));
+  document.getElementById('goHome3').addEventListener('click', () => showPage('home'));
+  document.getElementById('goHome4').addEventListener('click', () => showPage('home'));
+  document.getElementById('goHome5').addEventListener('click', () => showPage('home'));
+  document.getElementById('goHome6').addEventListener('click', () => showPage('home'));
+
+  // Common Enhance Filters
+  const enhFilters = {
+    medium: 'contrast(115%) brightness(105%) saturate(105%)',
+    high:   'contrast(130%) brightness(108%) saturate(112%)',
+    vhigh:  'contrast(148%) brightness(112%) saturate(120%)'
+  };
+
+  // Generic iframe-based Print logic
+  function printImageSrc(src){
+    let frame = document.getElementById('printFrame');
+    if(frame) frame.remove();
+    frame = document.createElement('iframe');
+    frame.id = 'printFrame';
+    frame.style.position = 'fixed';
+    frame.style.right = '0';
+    frame.style.bottom = '0';
+    frame.style.width = '0';
+    frame.style.height = '0';
+    frame.style.border = '0';
+    document.body.appendChild(frame);
+    const doc = frame.contentWindow.document;
+    doc.open();
+    doc.write(
+      '<html><head><title>Print</title><style>' +
+      '@page{margin:0;} html,body{margin:0;padding:0;} ' +
+      'body{display:flex;align-items:center;justify-content:center;min-height:100vh;}' +
+      'img{max-width:100%;max-height:100vh;}' +
+      '</style></head><body><img id="printImg"></body></html>'
+    );
+    doc.close();
+    const img = doc.getElementById('printImg');
+    img.onload = () => {
+      frame.contentWindow.focus();
+      frame.contentWindow.print();
+    };
+    img.src = src;
+  }
+
+  // Generic Smart Image Widget (Handles Upload, Rotate 90 deg, Crop Box, Enhance & Studio Adjustments)
+  function createSmartWidget(prefix, opts){
+    opts = opts || {};
+    const dropzone = document.getElementById(prefix + 'Dropzone');
+    const fileInput = document.getElementById(prefix + 'FileInput');
+    const preview = document.getElementById(prefix + 'Preview');
+    const cropBox = document.getElementById(prefix + 'CropBox');
+    const cropBtn = document.getElementById(prefix + 'CropBtn');
+    const cropControls = document.getElementById(prefix + 'CropControls');
+    const applyCrop = document.getElementById(prefix + 'ApplyCrop');
+    const cancelCrop = document.getElementById(prefix + 'CancelCrop');
+    const rotateLBtn = document.getElementById(prefix + 'RotateLBtn');
+    const rotateRBtn = document.getElementById(prefix + 'RotateRBtn');
+
+    let baseImg = null;    
+    let exportImg = null;  
+    let cropping = false;
+    const canvas = document.createElement('canvas');
+
+    function loadFile(file){
+      if(!file || !file.type || !file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = (e) => loadSrc(e.target.result);
+      reader.readAsDataURL(file);
+    }
+
+    function loadSrc(src){
+      const im = new Image();
+      im.onload = () => {
+        baseImg = im;
+        exportImg = im;
+        preview.src = src;
+        dropzone.classList.add('has-image');
+        if(cropBtn) cropBtn.disabled = false;
+        if(rotateLBtn) rotateLBtn.disabled = false;
+        if(rotateRBtn) rotateRBtn.disabled = false;
+        if(opts.onChange) opts.onChange();
+      };
+      im.src = src;
+    }
+
+    if (dropzone) {
+      dropzone.addEventListener('click', () => { if(!cropping) fileInput.click(); });
+      dropzone.addEventListener('keydown', (e) => {
+        if(!cropping && (e.key === 'Enter' || e.key === ' ')) fileInput.click();
+      });
+      fileInput.addEventListener('change', (e) => {
+        if(e.target.files && e.target.files[0]) loadFile(e.target.files[0]);
+      });
+      ['dragenter','dragover'].forEach(evt => {
+        dropzone.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('drag'); });
+      });
+      ['dragleave','drop'].forEach(evt => {
+        dropzone.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('drag'); });
+      });
+      dropzone.addEventListener('drop', (e) => {
+        const file = e.dataTransfer.files && e.dataTransfer.files[0];
+        if(file) loadFile(file);
+      });
+    }
+
+    // Rotation (90 degrees)
+    function rotateImage(deg){
+      if(!baseImg) return;
+      canvas.width = (Math.abs(deg) === 90) ? baseImg.naturalHeight : baseImg.naturalWidth;
+      canvas.height = (Math.abs(deg) === 90) ? baseImg.naturalWidth : baseImg.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate((deg * Math.PI) / 180);
+      ctx.drawImage(baseImg, -baseImg.naturalWidth / 2, -baseImg.naturalHeight / 2);
+      const src = canvas.toDataURL('image/jpeg', 0.98);
+      const newImg = new Image();
+      newImg.onload = () => {
+        baseImg = newImg;
+        exportImg = newImg;
+        preview.src = src;
+        if(opts.onChange) opts.onChange();
+      };
+      newImg.src = src;
+    }
+    if(rotateLBtn) rotateLBtn.addEventListener('click', () => rotateImage(-90));
+    if(rotateRBtn) rotateRBtn.addEventListener('click', () => rotateImage(90));
+
+    // Custom Angle Rotation (for Ration / Document Print)
+    function rotateCustomAngle(deg){
+      if(!baseImg) return;
+      if(deg === 0){
+        exportImg = baseImg;
+        preview.src = baseImg.src;
+        return;
+      }
+      const rad = (deg * Math.PI) / 180;
+      const cos = Math.abs(Math.cos(rad));
+      const sin = Math.abs(Math.sin(rad));
+      const newW = Math.round(baseImg.naturalWidth * cos + baseImg.naturalHeight * sin);
+      const newH = Math.round(baseImg.naturalWidth * sin + baseImg.naturalHeight * cos);
+
+      canvas.width = newW;
+      canvas.height = newH;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, newW, newH);
+      ctx.translate(newW / 2, newH / 2);
+      ctx.rotate(rad);
+      ctx.drawImage(baseImg, -baseImg.naturalWidth / 2, -baseImg.naturalHeight / 2);
+
+      const src = canvas.toDataURL('image/jpeg', 0.98);
+      const newImg = new Image();
+      newImg.onload = () => {
+        exportImg = newImg;
+        preview.src = src;
+      };
+      newImg.src = src;
+    }
+
+    // Crop: pointer events (mouse + touch + pen). The box always stays inside the image,
+    // can be moved by dragging inside it, and is locked to opts.aspect when given (e.g. 3.1 x 3.9 cm).
+    const aspect = opts.aspect || 0;
+    const MIN_PX = 24;
+    let cb = null;      // crop box as fractions {x,y,w,h} of the displayed image (survives window resize)
+    let drag = null;
+
+    preview.draggable = false;
+
+    function geom(){
+      const ir = preview.getBoundingClientRect(), dr = dropzone.getBoundingClientRect();
+      return { ir, ox: ir.left - dr.left - dropzone.clientLeft, oy: ir.top - dr.top - dropzone.clientTop, iw: ir.width, ih: ir.height };
+    }
+    function drawBox(){
+      if(!cb){ cropBox.style.display = 'none'; return; }
+      const g = geom();
+      cropBox.style.display = 'block';
+      cropBox.style.left = (g.ox + cb.x * g.iw) + 'px';
+      cropBox.style.top = (g.oy + cb.y * g.ih) + 'px';
+      cropBox.style.width = (cb.w * g.iw) + 'px';
+      cropBox.style.height = (cb.h * g.ih) + 'px';
+    }
+    function setBox(b, g){ cb = { x: b.x / g.iw, y: b.y / g.ih, w: b.w / g.iw, h: b.h / g.ih }; drawBox(); }
+    function defaultBox(){
+      const g = geom();
+      let w = g.iw * 0.8, h = g.ih * 0.8;
+      if(aspect){ if(w / h > aspect) w = h * aspect; else h = w / aspect; }
+      setBox({ x: (g.iw - w) / 2, y: (g.ih - h) / 2, w, h }, g);
+    }
+    // box spanned by a fixed anchor corner and the pointer, kept inside the image (and in ratio if locked)
+    function boxFromAnchor(ax, ay, px, py, g){
+      const dx = px >= ax ? 1 : -1, dy = py >= ay ? 1 : -1;
+      let w = Math.abs(px - ax), h = Math.abs(py - ay);
+      const maxW = dx > 0 ? g.iw - ax : ax, maxH = dy > 0 ? g.ih - ay : ay;
+      if(aspect){
+        if(w / aspect > h) h = w / aspect; else w = h * aspect;
+        const k = Math.min(1, maxW / w, maxH / h);
+        if(isFinite(k)){ w *= k; h *= k; }
+      } else { w = Math.min(w, maxW); h = Math.min(h, maxH); }
+      return { x: dx > 0 ? ax : ax - w, y: dy > 0 ? ay : ay - h, w, h };
+    }
+
+    if(cropBtn){
+      cropBtn.addEventListener('click', () => {
+        if(!baseImg) return;
+        cropping = true;
+        cropBtn.classList.add('active');
+        cropControls.style.display = 'flex';
+        dropzone.classList.add('cropping');
+        defaultBox();
+      });
+      cancelCrop.addEventListener('click', exitCropMode);
+    }
+
+    function exitCropMode(){
+      cropping = false; cb = null; drag = null;
+      cropBtn.classList.remove('active');
+      cropControls.style.display = 'none';
+      dropzone.classList.remove('cropping');
+      cropBox.style.display = 'none';
+    }
+
+    if(dropzone){
+      dropzone.addEventListener('pointerdown', (e) => {
+        if(!cropping || !cb) return;
+        const g = geom();
+        const px = e.clientX - g.ir.left, py = e.clientY - g.ir.top;
+        const b = { x: cb.x * g.iw, y: cb.y * g.ih, w: cb.w * g.iw, h: cb.h * g.ih };
+        if(e.target.classList && e.target.classList.contains('crop-handle')){
+          const c = e.target.dataset.corner;           // the opposite corner stays fixed
+          drag = { mode: 'resize', ax: (c === 'tl' || c === 'bl') ? b.x + b.w : b.x, ay: (c === 'tl' || c === 'tr') ? b.y + b.h : b.y };
+        } else if(e.target === cropBox){
+          drag = { mode: 'move', sx: px, sy: py, b };
+        } else {
+          if(px < 0 || py < 0 || px > g.iw || py > g.ih) return;   // must start on the image
+          drag = { mode: 'new', ax: px, ay: py };
+        }
+        try{ dropzone.setPointerCapture(e.pointerId); }catch(_){}
+        e.preventDefault();
+      });
+      dropzone.addEventListener('pointermove', (e) => {
+        if(!drag) return;
+        const g = geom();
+        const px = e.clientX - g.ir.left, py = e.clientY - g.ir.top;
+        if(drag.mode === 'move'){
+          setBox({
+            x: Math.max(0, Math.min(g.iw - drag.b.w, drag.b.x + px - drag.sx)),
+            y: Math.max(0, Math.min(g.ih - drag.b.h, drag.b.y + py - drag.sy)),
+            w: drag.b.w, h: drag.b.h }, g);
+        } else {
+          const b = boxFromAnchor(drag.ax, drag.ay, Math.max(0, Math.min(g.iw, px)), Math.max(0, Math.min(g.ih, py)), g);
+          if(b.w >= MIN_PX && b.h >= MIN_PX) setBox(b, g);
+        }
+      });
+      ['pointerup', 'pointercancel'].forEach(t => dropzone.addEventListener(t, () => { drag = null; }));
+    }
+    window.addEventListener('resize', () => { if(cropping) drawBox(); });
+
+    if(applyCrop){
+      applyCrop.addEventListener('click', () => {
+        if(!baseImg || !cb) return;
+        const W = baseImg.naturalWidth, H = baseImg.naturalHeight;
+        const sx = Math.max(0, Math.min(W - 1, Math.round(cb.x * W)));
+        const sy = Math.max(0, Math.min(H - 1, Math.round(cb.y * H)));
+        const sw = Math.max(1, Math.min(W - sx, Math.round(cb.w * W)));
+        const sh = Math.max(1, Math.min(H - sy, Math.round(cb.h * H)));
+        canvas.width = sw; canvas.height = sh;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(baseImg, sx, sy, sw, sh, 0, 0, sw, sh);
+        const croppedSrc = canvas.toDataURL('image/jpeg', 0.98);
+        const newImg = new Image();
+        newImg.onload = () => {
+          baseImg = newImg;
+          exportImg = newImg;
+          preview.src = croppedSrc;
+          exitCropMode();
+          if(opts.onChange) opts.onChange();
+        };
+        newImg.src = croppedSrc;
+      });
+    }
+
+    // Enhance Presets
+    let presetLevel = null;
+    function applyPreset(level){
+      if(!baseImg) return presetLevel;
+      presetLevel = (presetLevel === level) ? null : level;
+      canvas.width = baseImg.naturalWidth;
+      canvas.height = baseImg.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      if(presetLevel === 'inksaver'){
+        ctx.filter = 'none';
+        ctx.drawImage(baseImg, 0, 0);
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const d = imgData.data;
+        const blackPoint = 60, whitePoint = 175, range = whitePoint - blackPoint;
+        for(let i = 0; i < d.length; i += 4){
+          const lum = 0.299 * d[i] + 0.587 * d[i+1] + 0.114 * d[i+2];
+          let val;
+          if(lum <= blackPoint) val = 0;
+          else if(lum >= whitePoint) val = 255;
+          else val = ((lum - blackPoint) / range) * 255;
+          d[i] = d[i+1] = d[i+2] = val;
+        }
+        ctx.putImageData(imgData, 0, 0);
+      } else {
+        ctx.filter = presetLevel ? (enhFilters[presetLevel] || 'none') : 'none';
+        ctx.drawImage(baseImg, 0, 0);
+      }
+      const src = canvas.toDataURL('image/jpeg', 0.98);
+      const newImg = new Image();
+      newImg.onload = () => {
+        exportImg = newImg;
+        preview.src = src;
+      };
+      newImg.src = src;
+      return presetLevel;
+    }
+
+    // Advanced Studio Adjustments
+    function applyStudio(settings){
+      if(!baseImg) return;
+      const b = 100 + (settings.brightness || 0);
+      const c = 100 + (settings.contrast || 0);
+      let filterStr = `brightness(${b}%) contrast(${c}%)`;
+      if(settings.autoEnhance) filterStr += ' saturate(112%)';
+      if(settings.beauty) filterStr += ' blur(0.35px) saturate(106%) brightness(103%)';
+
+      canvas.width = baseImg.naturalWidth;
+      canvas.height = baseImg.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.filter = filterStr;
+      ctx.drawImage(baseImg, 0, 0);
+
+      // Skin Tone Adjustment
+      if(settings.tone && settings.tone !== 0){
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const d = imgData.data;
+        const t = settings.tone;
+        for(let i = 0; i < d.length; i += 4){
+          d[i]   = Math.min(255, Math.max(0, d[i]   + t * 0.8)); 
+          d[i+1] = Math.min(255, Math.max(0, d[i+1] + t * 0.3)); 
+          d[i+2] = Math.min(255, Math.max(0, d[i+2] - t * 0.8)); 
+        }
+        ctx.putImageData(imgData, 0, 0);
+      }
+
+      // Sharpness simulation
+      if(settings.sharpness && settings.sharpness > 0){
+        ctx.filter = 'contrast(106%)';
+        ctx.globalAlpha = settings.sharpness / 100;
+        ctx.drawImage(baseImg, 0, 0);
+        ctx.globalAlpha = 1.0;
+      }
+
+      const src = canvas.toDataURL('image/jpeg', 0.98);
+      const newImg = new Image();
+      newImg.onload = () => {
+        exportImg = newImg;
+        preview.src = src;
+      };
+      newImg.src = src;
+    }
+
+    return {
+      getImage(){ return exportImg; },
+      hasImage(){ return !!baseImg; },
+      applyPreset,
+      applyStudio,
+      rotateCustomAngle
+    };
+  }
+
+  // Wire Preset Buttons
+  function wireEnhanceButtons(prefix, widget){
+    const buttons = {
+      medium: document.getElementById(prefix + 'EnhMed'),
+      high: document.getElementById(prefix + 'EnhHigh'),
+      vhigh: document.getElementById(prefix + 'EnhVHigh'),
+      inksaver: document.getElementById(prefix + 'EnhInk')
+    };
+    Object.entries(buttons).forEach(([level, btn]) => {
+      if(!btn) return;
+      btn.addEventListener('click', () => {
+        const active = widget.applyPreset(level);
+        Object.entries(buttons).forEach(([key, b]) => b.classList.toggle('active', key === active));
+      });
+    });
+  }
+
+  // ===== 1. RESIZE TOOL =====
+  const rsWidget = createSmartWidget('rs', {
+    onChange: () => {
+      document.getElementById('rsKbInput').disabled = false;
+      document.getElementById('rsDownloadBtn').disabled = false;
+      document.getElementById('rsDownloadPdfBtn').disabled = false;
+      ['Med','High','VHigh','Ink'].forEach(s => document.getElementById('rsEnh' + s).disabled = false);
+      document.getElementById('rsStatus').textContent = 'Ready — enter target KB';
+    }
+  });
+  wireEnhanceButtons('rs', rsWidget);
+
+  async function compressCanvasToKB(srcCanvas, targetKB){
+    const targetBytes = targetKB * 1024;
+    function toBlob(cv, q){
+      return new Promise((resolve) => cv.toBlob((b) => resolve(b), 'image/jpeg', q));
+    }
+    async function atScale(scale){
+      const w = Math.max(1, Math.round(srcCanvas.width * scale));
+      const h = Math.max(1, Math.round(srcCanvas.height * scale));
+      const tmp = document.createElement('canvas');
+      tmp.width = w; tmp.height = h;
+      const tctx = tmp.getContext('2d');
+      tctx.fillStyle = '#ffffff';
+      tctx.fillRect(0, 0, w, h);
+      tctx.drawImage(srcCanvas, 0, 0, w, h);
+      let lo = 0.05, hi = 0.95, best = null, bestDiff = Infinity;
+      for(let i = 0; i < 8; i++){
+        const mid = (lo + hi) / 2;
+        const blob = await toBlob(tmp, mid);
+        const diff = Math.abs(blob.size - targetBytes);
+        if(diff < bestDiff){ bestDiff = diff; best = blob; }
+        if(blob.size > targetBytes) hi = mid; else lo = mid;
+      }
+      return best;
+    }
+    let scale = 1;
+    let blob = await atScale(scale);
+    let guard = 0;
+    while(blob.size > targetBytes && scale > 0.05 && guard < 12){
+      scale *= 0.85;
+      blob = await atScale(scale);
+      guard++;
+    }
+    return blob;
+  }
+
+  document.getElementById('rsDownloadBtn').addEventListener('click', async () => {
+    const img = rsWidget.getImage();
+    if(!img) return;
+    const kb = parseInt(document.getElementById('rsKbInput').value, 10) || 50;
+    const cv = document.createElement('canvas');
+    cv.width = img.naturalWidth; cv.height = img.naturalHeight;
+    cv.getContext('2d').drawImage(img, 0, 0);
+    document.getElementById('rsStatus').textContent = 'Compressing...';
+    const blob = await compressCanvasToKB(cv, kb);
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'kanha-resized.jpg';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    document.getElementById('rsStatus').textContent = `Downloaded JPG (~${Math.round(blob.size/1024)} KB)`;
+  });
+
+  document.getElementById('rsDownloadPdfBtn').addEventListener('click', async () => {
+    const img = rsWidget.getImage();
+    if(!img) return;
+    const kb = parseInt(document.getElementById('rsKbInput').value, 10) || 50;
+    const cv = document.createElement('canvas');
+    cv.width = img.naturalWidth; cv.height = img.naturalHeight;
+    cv.getContext('2d').drawImage(img, 0, 0);
+    document.getElementById('rsStatus').textContent = 'Generating PDF...';
+    const blob = await compressCanvasToKB(cv, kb);
+    
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const dataUrl = e.target.result;
+      const { jsPDF } = window.jspdf;
+      const imgWidthPx = cv.width;
+      const imgHeightPx = cv.height;
+      const orientation = imgWidthPx >= imgHeightPx ? 'l' : 'p';
+      const pdf = new jsPDF({ orientation: orientation, unit: 'mm', format: 'a4' });
+      
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      
+      let w = pageWidth;
+      let h = (imgHeightPx * pageWidth) / imgWidthPx;
+      if(h > pageHeight){
+        h = pageHeight;
+        w = (imgWidthPx * pageHeight) / imgHeightPx;
+      }
+      const x = (pageWidth - w) / 2;
+      const y = (pageHeight - h) / 2;
+      
+      pdf.addImage(dataUrl, 'JPEG', x, y, w, h);
+      pdf.save('kanha-resized.pdf');
+      document.getElementById('rsStatus').textContent = `Downloaded PDF (~${Math.round(blob.size/1024)} KB)`;
+    };
+    reader.readAsDataURL(blob);
+  });
+
+  // ===== 2. DOCUMENT PRINT TOOL =====
+  const dpWidget = createSmartWidget('dp', {
+    onChange: () => {
+      document.getElementById('dpPrintBtn').disabled = false;
+      document.getElementById('dpRotateAngle').disabled = false;
+      document.getElementById('dpResetAngle').disabled = false;
+      ['Med','High','VHigh','Ink'].forEach(s => document.getElementById('dpEnh' + s).disabled = false);
+      document.getElementById('dpStatus').textContent = 'Ready to print / rotate';
+    }
+  });
+  wireEnhanceButtons('dp', dpWidget);
+
+  const dpRotateAngleSlider = document.getElementById('dpRotateAngle');
+  const dpAngleValText = document.getElementById('dpAngleVal');
+
+  dpRotateAngleSlider.addEventListener('input', (e) => {
+    const angle = parseInt(e.target.value, 10) || 0;
+    dpAngleValText.textContent = angle + '°';
+    dpWidget.rotateCustomAngle(angle);
+  });
+
+  document.getElementById('dpResetAngle').addEventListener('click', () => {
+    dpRotateAngleSlider.value = 0;
+    dpAngleValText.textContent = '0°';
+    dpWidget.rotateCustomAngle(0);
+  });
+
+  document.getElementById('dpPrintBtn').addEventListener('click', () => {
+    const img = dpWidget.getImage();
+    if(img) printImageSrc(img.src);
+  });
+
+  // ===== 3. PHOTO SHEET A4 =====
+  const PX_PER_MM = 300 / 25.4;
+  const A4_W = Math.round(210 * PX_PER_MM);
+  const A4_H = Math.round(297 * PX_PER_MM);
+  const PS_PHOTO_W = Math.round(31 * PX_PER_MM);
+  const PS_PHOTO_H = Math.round(39 * PX_PER_MM);
+  const PS_COLS = 6;
+  const PS_ROW_GAP = 24;
+  const PS_TOP_MARGIN = 40;
+
+  const psSheetCanvas = document.createElement('canvas');
+  psSheetCanvas.width = A4_W;
+  psSheetCanvas.height = A4_H;
+  let psPhotos = [];   // images currently on the A4 sheet, in order (6 per row)
+  let psCount = 6;     // how many photos the next add/delete click handles (1,2,3,4,5,6,12)
+  let psDelMode = false;
+  const psMaxRows = Math.max(1, Math.floor((A4_H - PS_TOP_MARGIN) / (PS_PHOTO_H + PS_ROW_GAP)));
+  const psMaxSlots = psMaxRows * PS_COLS;
+
+  function psUpdateSheetPreview(){
+    document.getElementById('psSheetPreview').src = psSheetCanvas.toDataURL('image/jpeg', 0.9);
+  }
+  function psGap(){ return Math.max(6, Math.floor((A4_W - PS_COLS * PS_PHOTO_W) / (PS_COLS + 1))); }
+  function psPos(i){
+    const g = psGap();
+    return { x: g + (i % PS_COLS) * (PS_PHOTO_W + g), y: PS_TOP_MARGIN + Math.floor(i / PS_COLS) * (PS_PHOTO_H + PS_ROW_GAP) };
+  }
+  function psDrawOne(ctx, img, i){
+    const { x, y } = psPos(i);
+    drawImageCover(ctx, img, x, y, PS_PHOTO_W, PS_PHOTO_H);
+    ctx.strokeStyle = '#666666'; ctx.lineWidth = 7;
+    ctx.strokeRect(x, y, PS_PHOTO_W, PS_PHOTO_H);
+  }
+  function psRedraw(){
+    const ctx = psSheetCanvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, A4_W, A4_H);
+    psPhotos.forEach((img, i) => psDrawOne(ctx, img, i));
+    psUpdateSheetPreview();
+  }
+  function psClearSheet(){ psPhotos = []; psRedraw(); }
+  psClearSheet();
+
+  function drawImageCover(ctx, img, x, y, w, h){
+    const ir = img.naturalWidth / img.naturalHeight;
+    const tr = w / h;
+    let sx, sy, sw, sh;
+    if(ir > tr){
+      sh = img.naturalHeight; sw = sh * tr; sx = (img.naturalWidth - sw) / 2; sy = 0;
+    } else {
+      sw = img.naturalWidth; sh = sw / tr; sx = 0; sy = (img.naturalHeight - sh) / 2;
+    }
+    ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+  }
+
+  // adds up to n photos in the next free slots; returns how many were placed
+  function psAddPhotos(img, n){
+    const ctx = psSheetCanvas.getContext('2d');
+    let placed = 0;
+    while(placed < n && psPhotos.length < psMaxSlots){
+      psPhotos.push(img);
+      psDrawOne(ctx, img, psPhotos.length - 1);
+      placed++;
+    }
+    if(placed) psUpdateSheetPreview();
+    return placed;
+  }
+  // deletes the last n photos
+  function psDeleteLast(n){
+    const k = Math.min(n, psPhotos.length);
+    psPhotos.splice(psPhotos.length - k, k);
+    psRedraw();
+    return k;
+  }
+  // deletes the photo at index i; the photos after it shift back so there is no gap
+  function psDeleteAt(i){
+    psPhotos.splice(i, 1);
+    psRedraw();
+  }
+  function psSyncButtons(){
+    const has = psPhotos.length > 0;
+    document.getElementById('psDownloadBtn').disabled = !has;
+    document.getElementById('psPrintBtn').disabled = !has;
+    document.getElementById('psDelRow').disabled = !has;
+    document.getElementById('psDelMode').disabled = !has;
+    if(!has && psDelMode) psSetDelMode(false);
+  }
+  function psSetDelMode(on){
+    psDelMode = on;
+    document.getElementById('psDelMode').classList.toggle('active', on);
+    document.getElementById('psSheetPreview').classList.toggle('del-mode', on);
+    if(on) document.getElementById('psStatus').textContent = 'A4 Preview में जिस फोटो को हटाना है उस पर क्लिक करें';
+  }
+
+  let psStudioState = { beauty: false, autoEnhance: false, tone: 0, brightness: 0, contrast: 0, sharpness: 0 };
+  function psRecompute(){
+    psWidget.applyStudio(psStudioState);
+  }
+
+  const psWidget = createSmartWidget('ps', {
+    aspect: 31 / 39,
+    onChange: () => {
+      document.getElementById('psAddRow').disabled = false;
+      document.getElementById('psBeautyBtn').disabled = false;
+      document.getElementById('psAutoEnhance').disabled = false;
+      document.getElementById('psTone').disabled = false;
+      document.getElementById('psBrightness').disabled = false;
+      document.getElementById('psContrast').disabled = false;
+      document.getElementById('psSharpness').disabled = false;
+      document.getElementById('psStatus').textContent = 'Ready — फोटो की संख्या चुनकर जोड़ें';
+      psRecompute();
+    }
+  });
+
+  document.getElementById('psBeautyBtn').addEventListener('click', (e) => {
+    psStudioState.beauty = !psStudioState.beauty;
+    e.target.classList.toggle('active', psStudioState.beauty);
+    psRecompute();
+  });
+  document.getElementById('psAutoEnhance').addEventListener('click', (e) => {
+    psStudioState.autoEnhance = !psStudioState.autoEnhance;
+    e.target.classList.toggle('active', psStudioState.autoEnhance);
+    psRecompute();
+  });
+  document.getElementById('psTone').addEventListener('input', (e) => {
+    psStudioState.tone = parseInt(e.target.value, 10) || 0;
+    psRecompute();
+  });
+  document.getElementById('psBrightness').addEventListener('input', (e) => {
+    psStudioState.brightness = parseInt(e.target.value, 10) || 0;
+    psRecompute();
+  });
+  document.getElementById('psContrast').addEventListener('input', (e) => {
+    psStudioState.contrast = parseInt(e.target.value, 10) || 0;
+    psRecompute();
+  });
+  document.getElementById('psSharpness').addEventListener('input', (e) => {
+    psStudioState.sharpness = parseInt(e.target.value, 10) || 0;
+    psRecompute();
+  });
+
+  document.querySelectorAll('#psCountRow .btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      psCount = parseInt(btn.dataset.n, 10);
+      document.querySelectorAll('#psCountRow .btn').forEach(x => x.classList.toggle('active', x === btn));
+      document.getElementById('psAddRow').textContent = `+ ${psCount} फोटो जोड़ें`;
+      document.getElementById('psDelRow').textContent = `− ${psCount} फोटो हटाएं`;
+    });
+  });
+  document.getElementById('psAddRow').addEventListener('click', () => {
+    const img = psWidget.getImage();
+    if(!img) return;
+    if(psPhotos.length >= psMaxSlots){
+      document.getElementById('psStatus').textContent = 'पेज भर गया है — "नया A4 Sheet" दबाएं';
+      return;
+    }
+    const placed = psAddPhotos(img, psCount);
+    document.getElementById('psStatus').textContent = placed < psCount
+      ? `पेज भर गया — सिर्फ ${placed} फोटो जुड़ीं (${psPhotos.length}/${psMaxSlots})`
+      : `${placed} फोटो जुड़ गईं (${psPhotos.length}/${psMaxSlots})`;
+    psSyncButtons();
+  });
+  document.getElementById('psDelRow').addEventListener('click', () => {
+    const k = psDeleteLast(psCount);
+    document.getElementById('psStatus').textContent = k ? `${k} फोटो हटाई गईं (${psPhotos.length}/${psMaxSlots})` : 'हटाने के लिए कोई फोटो नहीं है';
+    psSyncButtons();
+  });
+  document.getElementById('psDelMode').addEventListener('click', () => psSetDelMode(!psDelMode));
+  document.getElementById('psSheetPreview').addEventListener('click', (e) => {
+    if(!psDelMode) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    if(!r.width || !r.height) return;
+    const cx = (e.clientX - r.left) / r.width * A4_W, cy = (e.clientY - r.top) / r.height * A4_H;
+    for(let i = 0; i < psPhotos.length; i++){
+      const { x, y } = psPos(i);
+      if(cx >= x && cx <= x + PS_PHOTO_W && cy >= y && cy <= y + PS_PHOTO_H){
+        psDeleteAt(i);
+        document.getElementById('psStatus').textContent = `फोटो हटाई गई (${psPhotos.length}/${psMaxSlots})`;
+        psSyncButtons();
+        return;
+      }
+    }
+  });
+  document.getElementById('psNewSheet').addEventListener('click', () => {
+    psClearSheet();
+    psSyncButtons();
+    document.getElementById('psStatus').textContent = 'नया A4 Sheet तैयार';
+  });
+  document.getElementById('psDownloadBtn').addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: false });
+    pdf.addImage(psSheetCanvas.toDataURL('image/jpeg', 0.98), 'JPEG', 0, 0, 210, 297, undefined, 'NONE');
+    pdf.save('kanha-photo-sheet.pdf');
+  });
+  document.getElementById('psPrintBtn').addEventListener('click', () => {
+    printImageSrc(psSheetCanvas.toDataURL('image/jpeg', 0.95));
+  });
+
+  // ===== 4. AADHAR MERGE TOOL =====
+  function amCheckReady(){
+    document.getElementById('amMergeBtn').disabled = !(amAWidget.hasImage() && amBWidget.hasImage());
+    ['Med','High','VHigh','Ink'].forEach(s => {
+      document.getElementById('amAEnh' + s).disabled = !amAWidget.hasImage();
+      document.getElementById('amBEnh' + s).disabled = !amBWidget.hasImage();
+    });
+  }
+  const amAWidget = createSmartWidget('amA', { onChange: amCheckReady });
+  const amBWidget = createSmartWidget('amB', { onChange: amCheckReady });
+  wireEnhanceButtons('amA', amAWidget);
+  wireEnhanceButtons('amB', amBWidget);
+
+  const amMergedCanvas = document.createElement('canvas');
+  document.getElementById('amMergeBtn').addEventListener('click', () => {
+    const imgA = amAWidget.getImage();
+    const imgB = amBWidget.getImage();
+    if(!imgA || !imgB) return;
+
+    const targetW = Math.max(imgA.naturalWidth, imgB.naturalWidth);
+    const hA = Math.round(imgA.naturalHeight * (targetW / imgA.naturalWidth));
+    const hB = Math.round(imgB.naturalHeight * (targetW / imgB.naturalWidth));
+    const gap = Math.round(targetW * 0.02);
+
+    amMergedCanvas.width = targetW;
+    amMergedCanvas.height = hA + hB + gap;
+    const ctx = amMergedCanvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, amMergedCanvas.width, amMergedCanvas.height);
+    ctx.drawImage(imgA, 0, 0, targetW, hA);
+    ctx.drawImage(imgB, 0, hA + gap, targetW, hB);
+
+    document.getElementById('amResultPreview').src = amMergedCanvas.toDataURL('image/jpeg', 0.9);
+    document.getElementById('amResultWrap').style.display = 'flex';
+    document.getElementById('amDownloadBtn').disabled = false;
+    document.getElementById('amPrintBtn').disabled = false;
+    document.getElementById('amStatus').textContent = 'Merge हो गया — अब Download/Print करें';
+  });
+
+  document.getElementById('amDownloadBtn').addEventListener('click', async () => {
+    const kb = parseInt(document.getElementById('amKbInput').value, 10) || 95;
+    document.getElementById('amStatus').textContent = 'Compress हो रहा है...';
+    const blob = await compressCanvasToKB(amMergedCanvas, kb);
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'kanha-aadhar-merged.jpg';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    document.getElementById('amStatus').textContent = `Downloaded (~${Math.round(blob.size/1024)} KB)`;
+  });
+
+  document.getElementById('amPrintBtn').addEventListener('click', () => {
+    printImageSrc(amMergedCanvas.toDataURL('image/jpeg', 0.95));
+  });
+
+  // ===== 5. AADHAR CROP (PVC) TOOL =====
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+  
+  let acFullPdfCanvas = null;
+  let acFrontImgDataGlobal = '';
+  let acBackImgDataGlobal = '';
+  const AC_PDF_SCALE = 5.0; 
+
+  function acToggleSettings() {
+    const sec = document.getElementById('acAdjustSection');
+    sec.style.display = (sec.style.display === 'none') ? 'flex' : 'none';
+  }
+  document.getElementById('acToggleBtn').addEventListener('click', acToggleSettings);
+
+  function acLoadSavedSettings() {
+    const savedData = localStorage.getItem('kanhaAadhaarSettings');
+    if (savedData) {
+        const settings = JSON.parse(savedData);
+        document.getElementById('acZoomSlider').value = settings.zoom || 100;
+        document.getElementById('acOffsetY').value = settings.y || 0;
+        document.getElementById('acOffsetXFront').value = settings.xf || 0;
+        document.getElementById('acOffsetXBack').value = settings.xb || 0;
+    } else {
+        document.getElementById('acZoomSlider').value = 100;
+        document.getElementById('acOffsetY').value = 0;
+        document.getElementById('acOffsetXFront').value = 0;
+        document.getElementById('acOffsetXBack').value = 0;
+    }
+  }
+
+  document.getElementById('acSaveBtn').addEventListener('click', () => {
+    const settings = {
+        zoom: document.getElementById('acZoomSlider').value,
+        y: document.getElementById('acOffsetY').value,
+        xf: document.getElementById('acOffsetXFront').value,
+        xb: document.getElementById('acOffsetXBack').value
+    };
+    localStorage.setItem('kanhaAadhaarSettings', JSON.stringify(settings));
+    const msg = document.getElementById('acSaveMsg');
+    msg.style.display = 'block';
+    setTimeout(() => { msg.style.display = 'none'; }, 3000);
+  });
+
+  document.getElementById('acProcessBtn').addEventListener('click', async () => {
+    const fileInput = document.getElementById('acPdfFile');
+    const passwordInput = document.getElementById('acPdfPassword').value;
+    const statusText = document.getElementById('acStatus');
+
+    document.getElementById('acAdjustSection').style.display = 'none';
+    document.getElementById('acPreviewSection').style.display = 'none';
+    document.getElementById('acToggleBtn').style.display = 'none';
+    document.getElementById('acActionRow').style.display = 'none';
+
+    if (fileInput.files.length === 0) {
+        statusText.style.color = "var(--red)";
+        statusText.innerText = "Bhai, pehle Aadhaar PDF file select karo!";
+        return;
+    }
+
+    statusText.style.color = "var(--magenta)";
+    statusText.innerText = "High-Quality Loading... Thoda wait karein...";
+
+    const file = fileInput.files[0];
+    const fileReader = new FileReader();
+
+    fileReader.onload = async function(e) {
+        const typedarray = new Uint8Array(e.target.result);
+        try {
+            const pdf = await pdfjsLib.getDocument({ data: typedarray, password: passwordInput }).promise;
+            const page = await pdf.getPage(1);
+            const viewport = page.getViewport({ scale: AC_PDF_SCALE });
+
+            acFullPdfCanvas = document.createElement('canvas');
+            const ctx = acFullPdfCanvas.getContext('2d');
+            acFullPdfCanvas.width = viewport.width;
+            acFullPdfCanvas.height = viewport.height;
+
+            await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+            acLoadSavedSettings();
+            statusText.innerText = "";
+            document.getElementById('acToggleBtn').style.display = 'inline-block';
+            document.getElementById('acPreviewSection').style.display = 'flex';
+            document.getElementById('acActionRow').style.display = 'flex';
+
+            acApplyCrop();
+        } catch (error) {
+            console.error(error);
+            statusText.style.color = "var(--red)";
+            if (error.name === "PasswordException") {
+                statusText.innerText = "❌ Password galat hai ya nahi dala gaya hai!";
+            } else {
+                statusText.innerText = "❌ Error: File khul nahi rahi. Sahi PDF daalein.";
+            }
+        }
+    };
+    fileReader.readAsArrayBuffer(file);
+  });
+
+  function acApplyCrop() {
+    if (!acFullPdfCanvas) return;
+    const zoomVal = parseInt(document.getElementById('acZoomSlider').value);
+    const offsetY = parseInt(document.getElementById('acOffsetY').value);
+    const offsetXFront = parseInt(document.getElementById('acOffsetXFront').value);
+    const offsetXBack = parseInt(document.getElementById('acOffsetXBack').value);
+
+    document.getElementById('acZoomVal').innerText = zoomVal + "%";
+    document.getElementById('acYVal').innerText = offsetY;
+    document.getElementById('acXFrontVal').innerText = offsetXFront;
+    document.getElementById('acXBackVal').innerText = offsetXBack;
+
+    const pvcRatio = 85.6 / 54.0;
+    const zoomFactor = zoomVal / 100;
+    const cardWidth = acFullPdfCanvas.width * 0.425 * zoomFactor;
+    const cardHeight = cardWidth / pvcRatio;
+
+    const baseCardStartY = acFullPdfCanvas.height * 0.680;
+    const baseFrontStartX = acFullPdfCanvas.width * 0.045;
+    const baseBackStartX = acFullPdfCanvas.width * 0.525;
+
+    const finalCardStartY = baseCardStartY + (offsetY * (AC_PDF_SCALE / 1.5));
+    const finalFrontStartX = baseFrontStartX + (offsetXFront * (AC_PDF_SCALE / 1.5));
+    const finalBackStartX = baseBackStartX + (offsetXBack * (AC_PDF_SCALE / 1.5));
+
+    const frontCanvas = document.createElement('canvas');
+    frontCanvas.width = cardWidth;
+    frontCanvas.height = cardHeight;
+    frontCanvas.getContext('2d').drawImage(acFullPdfCanvas, finalFrontStartX, finalCardStartY, cardWidth, cardHeight, 0, 0, cardWidth, cardHeight);
+    acFrontImgDataGlobal = frontCanvas.toDataURL('image/jpeg', 1.0);
+
+    const backCanvas = document.createElement('canvas');
+    backCanvas.width = cardWidth;
+    backCanvas.height = cardHeight;
+    backCanvas.getContext('2d').drawImage(acFullPdfCanvas, finalBackStartX, finalCardStartY, cardWidth, cardHeight, 0, 0, cardWidth, cardHeight);
+    acBackImgDataGlobal = backCanvas.toDataURL('image/jpeg', 1.0);
+
+    document.getElementById('acPreviewFront').src = acFrontImgDataGlobal;
+    document.getElementById('acPreviewBack').src = acBackImgDataGlobal;
+  }
+
+  ['acZoomSlider', 'acOffsetY', 'acOffsetXFront', 'acOffsetXBack'].forEach(id => {
+    document.getElementById(id).addEventListener('input', acApplyCrop);
+  });
+
+  document.getElementById('acDownloadPDF').addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+    const pvcWidth = 85.6;
+    const pvcHeight = 54.0;
+    const marginY = 15;
+    const marginX_Left = 15;
+    const marginX_Right = marginX_Left + pvcWidth + 2;
+
+    doc.addImage(acFrontImgDataGlobal, 'JPEG', marginX_Left, marginY, pvcWidth, pvcHeight);
+    doc.addImage(acBackImgDataGlobal, 'JPEG', marginX_Right, marginY, pvcWidth, pvcHeight);
+    doc.setDrawColor(200, 200, 200);
+    doc.rect(marginX_Left, marginY, pvcWidth, pvcHeight);
+    doc.rect(marginX_Right, marginY, pvcWidth, pvcHeight);
+    doc.save("KanhaPrinters_AutoPVC.pdf");
+  });
+
+  document.getElementById('acDownloadJPGs').addEventListener('click', () => {
+    const linkFront = document.createElement('a');
+    linkFront.href = acFrontImgDataGlobal;
+    linkFront.download = "Kanha_Aadhaar_Front.jpg";
+    document.body.appendChild(linkFront);
+    linkFront.click();
+    document.body.removeChild(linkFront);
+
+    setTimeout(() => {
+        const linkBack = document.createElement('a');
+        linkBack.href = acBackImgDataGlobal;
+        linkBack.download = "Kanha_Aadhaar_Back.jpg";
+        document.body.appendChild(linkBack);
+        linkBack.click();
+        document.body.removeChild(linkBack);
+    }, 500);
+  });
+
+  // ===== 6. PASSBOOK TOOL SCRIPT LOGIC =====
+  const MM_TO_PX = 3.78; 
+  const fieldsMeta = {
+    branchName: {label:'Branch Name', prefix:'BRANCH ADDRESS : '},
+    addr1:      {label:'VPO / Post line', prefix:'VPO- '},
+    addr2:      {label:'District line', prefix:'DISTRICT '},
+    pin:        {label:'Pin Code', prefix:'Pin : '},
+    tel:        {label:'Tel', prefix:'Tel : '},
+    ifsc:       {label:'IFSC Code', prefix:'IFSC Code :'},
+    micr:       {label:'MICR Code', prefix:'MICR Code :'},
+    accName:    {label:'Name / A/c Holder', prefix:'Name : '},
+    accNo:      {label:'Account No', prefix:'Account No : '},
+    custId:     {label:'Customer ID', prefix:'Customer ID : '},
+    occupation: {label:'Occupation', prefix:'Occupation : '},
+    opMode:     {label:'Operation Mode', prefix:'Operation Mode : '},
+    commAddr1:  {label:'Comm Address line 1', prefix:'Comm Address '},
+    commAddr2:  {label:'Comm Address line 2', prefix:''},
+    commAddr3:  {label:'Comm Address line 3', prefix:''},
+    commPin:    {label:'Comm Pin', prefix:'Pin '},
+    nominee:    {label:'Nominee Added', prefix:'Nominee Added '},
+    openDate:   {label:'A/c Open Date', prefix:'A/c Open Date '}
+  };
+
+  const pagePrefixOverrides = {
+    page1: {},
+    page2: { accName: 'A/c Holder ', custId: 'Customer ID ', accNo: 'Account No ', occupation: 'Occupation ', opMode: 'Operation Mode ', commAddr1: 'Comm Address ' }
+  };
+
+  const pagesConfig = {
+    page1: { label: 'Front Page', fields: ['branchName','addr1','addr2','pin','tel','ifsc','micr','accNo','accName'], defaultSize: {w:210, h:99, orientation:'landscape', fontSize:14, fontFamily:"'VT323', monospace"} },
+    page2: { label: 'Back Page', fields: ['custId','accNo','accName','occupation','opMode','commAddr1','commAddr2','commAddr3','commPin','nominee','openDate','ifsc'], defaultSize: {w:210, h:110, orientation:'landscape', fontSize:14, fontFamily:"'VT323', monospace"} }
+  };
+
+  const defaultPositions = {
+    page1: { branchName:{x:15,y:10}, addr1:{x:45,y:20}, addr2:{x:42,y:26}, pin:{x:45,y:32}, tel:{x:45,y:38}, ifsc:{x:15,y:44}, micr:{x:75,y:44}, accNo:{x:15,y:60}, accName:{x:15,y:68} },
+    page2: { custId:{x:10, y:20}, accNo:{x:10, y:26}, accName:{x:10, y:38}, occupation:{x:10, y:50}, opMode:{x:10, y:56}, commAddr1:{x:10, y:68}, commAddr2:{x:48, y:74}, commAddr3:{x:48, y:80}, commPin:{x:48, y:86}, nominee:{x:10, y:98}, openDate:{x:10, y:104}, ifsc:{x:10, y:110} }
+  };
+
+  let positions = JSON.parse(JSON.stringify(defaultPositions));
+  let pageSizes = { page1: {...pagesConfig.page1.defaultSize}, page2: {...pagesConfig.page2.defaultSize} };
+  let activePage = 'page1';
+  let zoom = 100;
+
+  function switchPage(p){
+    activePage = p;
+    document.getElementById('tabBtnPage1').classList.toggle('active', p==='page1');
+    document.getElementById('tabBtnPage2').classList.toggle('active', p==='page2');
+    document.getElementById('pageW').value = pageSizes[activePage].w;
+    document.getElementById('pageH').value = pageSizes[activePage].h;
+    document.getElementById('pageOrientation').value = pageSizes[activePage].orientation || 'landscape';
+    document.getElementById('fontSize').value = pageSizes[activePage].fontSize || 14;
+    document.getElementById('fontFamily').value = pageSizes[activePage].fontFamily || "'VT323', monospace";
+    document.getElementById('printPageLabel').textContent = pagesConfig[activePage].label;
+    document.getElementById('alignPageLabel').textContent = pagesConfig[activePage].label.toUpperCase();
+    buildPosControls();
+    renderPreview();
+  }
+
+  function buildPosControls(){
+    const container = document.getElementById('posControls');
+    if(!container) return;
+    container.innerHTML = '';
+    pagesConfig[activePage].fields.forEach(key=>{
+      const f = fieldsMeta[key];
+      const pos = positions[activePage][key];
+      if(!pos) return;
+      const row = document.createElement('div');
+      row.className = 'pos-row';
+      row.style.display = 'grid';
+      row.style.gridTemplateColumns = '1fr 65px 65px';
+      row.style.gap = '8px';
+      row.style.alignItems = 'center';
+      row.style.marginBottom = '8px';
+      row.innerHTML = `<span style="font-size:12.5px; color:#fff;">${f.label}</span><input type="number" step="0.5" value="${pos.x}" onchange="updatePos('${key}','x',this.value)" style="width:100%; padding:6px; border:1px solid var(--line); border-radius:6px; background:rgba(10, 14, 23, 0.7); color:#fff; font-size:12px; text-align:center;"><input type="number" step="0.5" value="${pos.y}" onchange="updatePos('${key}','y',this.value)" style="width:100%; padding:6px; border:1px solid var(--line); border-radius:6px; background:rgba(10, 14, 23, 0.7); color:#fff; font-size:12px; text-align:center;">`;
+      container.appendChild(row);
+    });
+  }
+
+  function updatePos(key, axis, val){
+    if(positions[activePage][key]){
+      positions[activePage][key][axis] = parseFloat(val) || 0;
+      renderPreview();
+    }
+  }
+
+  function getFieldValue(key){
+    const el = document.getElementById(key);
+    return el ? el.value.toUpperCase() : '';
+  }
+
+  function renderPreview(){
+    const area = document.getElementById('printArea');
+    if(!area) return;
+    const size = pageSizes[activePage];
+    const wPx = size.w * MM_TO_PX * (zoom/100);
+    const hPx = size.h * MM_TO_PX * (zoom/100);
+    
+    area.style.width = wPx + 'px';
+    area.style.height = hPx + 'px';
+    area.innerHTML = '';
+
+    const darkness = document.getElementById('printDarkness') ? document.getElementById('printDarkness').value : 'normal';
+    const fontSz = size.fontSize || 14;
+    const fontFam = size.fontFamily || "'VT323', monospace";
+
+    pagesConfig[activePage].fields.forEach(key=>{
+      const val = getFieldValue(key);
+      if(!val) return;
+      const f = fieldsMeta[key];
+      const pos = positions[activePage][key];
+      if(!pos) return;
+      const overridePrefix = pagePrefixOverrides[activePage] && pagePrefixOverrides[activePage][key];
+      const prefix = (overridePrefix !== undefined) ? overridePrefix : (f.prefix || '');
+      
+      const div = document.createElement('div');
+      div.className = 'pfield';
+      div.style.position = 'absolute';
+      div.style.whiteSpace = 'nowrap';
+      div.style.color = '#000';
+      div.style.textTransform = 'uppercase';
+      div.style.left = (pos.x * MM_TO_PX * (zoom/100)) + 'px';
+      div.style.top = (pos.y * MM_TO_PX * (zoom/100)) + 'px';
+      div.style.fontSize = (fontSz * (zoom/100)) + 'pt';
+      div.style.fontFamily = fontFam;
+
+      if(darkness === 'light'){ div.style.opacity = '0.55'; div.style.letterSpacing = '0.4px'; }
+      else if(darkness === 'normal'){ div.style.opacity = '0.85'; div.style.letterSpacing = '0.6px'; }
+      else if(darkness === 'medium'){ div.style.opacity = '1'; div.style.letterSpacing = '0.8px'; div.style.fontWeight = '600'; }
+      else if(darkness === 'xbold'){ div.style.opacity = '1'; div.style.letterSpacing = '0.8px'; div.style.fontWeight = '700'; div.style.textShadow = '0.3px 0 0 currentColor, -0.3px 0 0 currentColor, 0 0.3px 0 currentColor, 0 -0.3px 0 currentColor'; }
+
+      div.textContent = prefix + (prefix ? '· ' : '') + val;
+      area.appendChild(div);
+    });
+  }
+
+  function updatePage(){
+    pageSizes[activePage].w = parseFloat(document.getElementById('pageW').value) || 210;
+    pageSizes[activePage].h = parseFloat(document.getElementById('pageH').value) || 99;
+    pageSizes[activePage].orientation = document.getElementById('pageOrientation').value;
+    pageSizes[activePage].fontSize = parseFloat(document.getElementById('fontSize').value) || 14;
+    pageSizes[activePage].fontFamily = document.getElementById('fontFamily').value;
+    renderPreview();
+  }
+
+  function updateZoom(){
+    zoom = parseFloat(document.getElementById('zoom').value) || 100;
+    renderPreview();
+  }
+
+  function clearForm(){
+    Object.keys(fieldsMeta).forEach(key=>{
+      const el = document.getElementById(key);
+      if(el) {
+        if (key === 'addr1') el.value = 'SHAHJAHANPUR';
+        else if (key === 'addr2') el.value = 'KANPUR DEHAT';
+        else if (key === 'ifsc') el.value = 'BARB0BUPGBX';
+        else el.value = '';
+      }
+    });
+    renderPreview();
+  }
+
+  function resetLayout(){
+    positions[activePage] = JSON.parse(JSON.stringify(defaultPositions[activePage]));
+    pageSizes[activePage] = {...pagesConfig[activePage].defaultSize};
+    document.getElementById('fontSize').value = pageSizes[activePage].fontSize;
+    document.getElementById('fontFamily').value = pageSizes[activePage].fontFamily;
+    buildPosControls();
+    renderPreview();
+  }
+
+  function doPrint(){
+    const size = pageSizes[activePage];
+    const savedZoom = zoom;
+    zoom = 100;
+    renderPreview();
+    const printHtml = document.getElementById('printArea').outerHTML;
+    zoom = savedZoom;
+    renderPreview();
+
+    const printWindow = window.open('', '_blank', 'width=900,height=700');
+    if(!printWindow){ alert('Print window block hai.'); return; }
+    printWindow.document.open();
+    printWindow.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Print Passbook</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"><style>@page { size: ${size.w}mm ${size.h}mm ${size.orientation || 'landscape'}; margin: 0; } html, body { margin:0; padding:0; } #printArea{ position:relative; background:#fff; border:none !important; box-shadow:none !important; overflow:hidden !important; } .pfield{ position:absolute; white-space:nowrap; color:#000; text-transform:uppercase; }</style></head><body onload="window.focus(); window.print();">${printHtml}</body></html>`);
+    printWindow.document.close();
+  }
+
+  async function saveLayout(){
+    try{
+      const payload = JSON.stringify({positions, pageSizes});
+      localStorage.setItem('passbook-layout-vip', payload);
+      document.getElementById('statusMsg').textContent = 'VIP Alignment Saved Successfully ✓';
+    }catch(e){ document.getElementById('statusMsg').textContent = 'Save Error: ' + e.message; }
+  }
+
+  async function loadLayout(){
+    try{
+      const saved = localStorage.getItem('passbook-layout-vip');
+      if(saved){
+        const parsed = JSON.parse(saved);
+        if(parsed.positions) positions = parsed.positions;
+        if(parsed.pageSizes) pageSizes = parsed.pageSizes;
+      }
+    }catch(e){}
+    switchPage(activePage);
+  }
+
+  async function extractPdfLines(arrayBuffer){
+    const pdf = await pdfjsLib.getDocument({data:arrayBuffer}).promise;
+    let allLines = [];
+    for(let p=1;p<=pdf.numPages;p++){
+      const page = await pdf.getPage(p);
+      const content = await page.getTextContent();
+      const items = content.items.map(it=>({str: it.str, x: it.transform[4], y: it.transform[5]})).filter(it=>it.str.trim().length>0);
+      items.sort((a,b)=> b.y - a.y || a.x - b.x);
+      let rows = [], currentRow = [], lastY = null;
+      const TOL = 4;
+      items.forEach(it=>{
+        if(lastY===null || Math.abs(it.y-lastY)<=TOL){ currentRow.push(it); }
+        else { rows.push(currentRow); currentRow=[it]; }
+        lastY = it.y;
+      });
+      if(currentRow.length) rows.push(currentRow);
+      rows.forEach(row=>{
+        row.sort((a,b)=>a.x-b.x);
+        const line = row.map(r=>r.str).join(' ').replace(/\s+/g,' ').trim();
+        if(line) allLines.push(line);
+      });
+    }
+    return allLines;
+  }
+
+  function grabLine(lines, label){
+    const target = label.toUpperCase();
+    for(const line of lines){
+      if(line.toUpperCase().startsWith(target)){
+        return line.substring(label.length).replace(/^[:\s]+/, '').trim();
+      }
+    }
+    return '';
+  }
+
+  function parseAccountForm(lines){
+    const fullText = lines.join('\n');
+    const data = {};
+    data.custId = grabLine(lines, 'CIF NO');
+    data.accNo = grabLine(lines, 'ACCOUNT NO');
+    let linkBranch = grabLine(lines, 'LINK BRANCH(NAME AND CODE NO)') || grabLine(lines, 'LINK BRANCH');
+    data.branchName = linkBranch ? linkBranch.split('/')[0].trim() : '';
+    data.rawName = grabLine(lines, 'Name in Full');
+    data.village = grabLine(lines, 'Village');
+    data.city = grabLine(lines, 'City');
+    data.pin = grabLine(lines, 'Pin Code');
+    data.tel = grabLine(lines, 'Telephone No');
+    data.profession = grabLine(lines, 'Profession');
+    data.sex = grabLine(lines, 'Sex').toUpperCase();
+    data.district = grabLine(lines, 'Permanent Address District') || grabLine(lines, 'Correspondence Address District');
+    data.address = grabLine(lines, 'Address');
+
+    const dateMatch = fullText.match(/\bDate\s*:\s*(\d{4})-(\d{2})-(\d{2})/);
+    if(dateMatch){ data.openDate = `${dateMatch[3]}-${dateMatch[2]}-${dateMatch[1]}`; }
+    data.nominee = 'NO';
+    if(fullText.match(/([A-Z][A-Za-z\s]+?)\s+(MOTHER|FATHER|SON|DAUGHTER|WIFE|HUSBAND|SISTER|BROTHER|SPOUSE)\s+(\d{1,3})\s+(\d{4}-\d{2}-\d{2})/i)){
+      data.nominee = 'YES';
+    }
+    return data;
+  }
+
+  async function handlePdfUpload(){
+    const fileInput = document.getElementById('pdfInput');
+    const statusEl = document.getElementById('pdfStatus');
+    if(!fileInput.files || !fileInput.files[0]){ statusEl.textContent = 'पहले PDF file चुनें।'; return; }
+    statusEl.textContent = 'PDF पढ़ रहे हैं...';
+    try{
+      const arrayBuffer = await fileInput.files[0].arrayBuffer();
+      const lines = await extractPdfLines(arrayBuffer);
+      const data = parseAccountForm(lines);
+
+      if(data.custId) document.getElementById('custId').value = data.custId;
+      if(data.accNo) document.getElementById('accNo').value = data.accNo;
+      if(data.branchName) document.getElementById('branchName').value = data.branchName;
+      
+      let rawAddress = data.address || '';
+      if (!rawAddress) {
+          let parts = [];
+          if (data.village) parts.push(data.village);
+          if (data.city) parts.push(data.city);
+          if (data.district && data.district !== data.city) parts.push(data.district);
+          rawAddress = parts.join(' ');
+      }
+      if (rawAddress) {
+          let words = rawAddress.toUpperCase().trim().split(/\s+/).filter(w => w);
+          let half = Math.ceil(words.length / 2);
+          document.getElementById('commAddr1').value = words.slice(0, half).join(' ');
+          document.getElementById('commAddr2').value = words.slice(half).join(' ');
+      }
+
+      if(data.pin){ document.getElementById('pin').value = data.pin; document.getElementById('commPin').value = data.pin; }
+      if(data.tel) document.getElementById('tel').value = data.tel;
+      if(data.profession) document.getElementById('occupation').value = data.profession;
+      if(data.openDate) document.getElementById('openDate').value = data.openDate;
+      if(data.nominee) document.getElementById('nominee').value = data.nominee;
+
+      if(data.rawName){
+        let title = data.sex === 'M' ? 'MR ' : (data.sex === 'F' ? 'MISS ' : '');
+        document.getElementById('accName').value = (title + data.rawName).trim().toUpperCase();
+      }
+      document.getElementById('opMode').value = 'SELF';
+      
+      renderPreview();
+      statusEl.textContent = '✓ Data PDF se auto-fill ho gaya!';
+    }catch(e){ statusEl.textContent = 'PDF Error: ' + e.message; }
+  }
+
+  window.addEventListener('DOMContentLoaded', ()=>{
+    Object.keys(fieldsMeta).forEach(key=>{
+      const el = document.getElementById(key);
+      if(el) el.addEventListener('input', renderPreview);
+      if(el && el.tagName === 'SELECT') el.addEventListener('change', renderPreview);
+    });
+    loadLayout();
+  });
+</script>
+</body>
+</html>
